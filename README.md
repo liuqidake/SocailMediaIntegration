@@ -1,1 +1,1 @@
-# SocailMediaIntegration
+# Socail Media Integration
