@@ -1,28 +1,48 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Contents v-bind:contents="contents"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Contents from "./components/Contents"
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    Contents
+  },
+  data(){
+    return {
+      contents:[
+        {
+          id:1,
+          name:"Jackson",
+          content: "Hello Guys"
+        },
+        {
+          id:2,
+          name:"Elsa",
+          content: "I am so happy today"
+        },
+        {
+          id:3,
+          name:"Harry",
+          content: "Well well well"
+        },
+      ]
+    }
   }
 }
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  /* margin-top: 60px;  */
 }
+
 </style>
