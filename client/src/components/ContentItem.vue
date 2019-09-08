@@ -18,7 +18,9 @@ export default {
         border:0.5px solid #e8eaed;
         margin:0em 20em ;
         padding-left:1em;
-        padding-right:1em
+        padding-right:1em;
+        background: #fff;
+        border-radius: 0.3em
     }
     #username{
         text-align:left;
