@@ -1,1 +1,1 @@
-# Socail Media Integration
+# Social Media Integration
