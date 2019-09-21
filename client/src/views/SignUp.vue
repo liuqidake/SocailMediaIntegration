@@ -13,6 +13,7 @@
         <v-row justify="center">
             <v-col cols="8" sm="6">
               <v-text-field
+                v-model="email"
                 label="Email address"
                 value=""
                 suffix=""
@@ -22,21 +23,22 @@
         <v-row justify="center">
           <v-col cols="8" sm="6">
             <v-text-field
-              :append-icon="show2 ? 'visibility' : 'visibility_off'"
+              v-model="password"
+              :append-icon="show ? 'visibility' : 'visibility_off'"
               :rules="[rules.required, rules.min]"
-              :type="show2 ? 'text' : 'password'"
+              :type="show ? 'text' : 'password'"
               name="input-10-2"
               label="Password"
               hint="At least 8 characters"
               value=""
               class="input-group--focused"
-              @click:append="show2 = !show2"
+              @click:append="show = !show"
             ></v-text-field>
           </v-col>
         </v-row>
         <v-row justify="center">
           <v-col cols="8" sm="6">
-            <v-btn color="primary">Submit</v-btn>
+            <v-btn @click="signUp" color="primary">Submit</v-btn>
           </v-col>
         </v-row>
         <v-row justify="center">
@@ -51,15 +53,15 @@
 </template>
 
 <script>
+import firebase from 'firebase'
+
 export default {
     name:'signup',
     data(){
         return {
-              show1: false,
-              show2: true,
-              show3: false,
-              show4: false,
-              password: 'Password',
+              email:"",
+              password:"",
+              show: true,
               rules: {
               required: value => !!value || 'Required.',
               min: v => v.length >= 8 || 'Min 8 characters',
@@ -67,6 +69,17 @@ export default {
             },
         };
     },
-    methods:{}
+    methods:{
+      signUp: function(){
+        firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
+          function(user){
+            alert('Your account has been created')
+          },
+          function(err){
+            alert("Ops, "+err)
+          }
+        )
+      }
+    }
 }
 </script>
