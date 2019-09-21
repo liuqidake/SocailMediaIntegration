@@ -10,10 +10,12 @@
 <script>
 import Navbar from '@/components/Navbar.vue'
 
-export default {
-  name: 'App',
-  components:{Navbar},
-  data: () => ({
-  }),
-};
+ const app = {
+    name: 'App',  
+    components:{Navbar},
+    // data: () => {  
+    //   return null
+    // },  
+ }
+ export default app 
 </script>

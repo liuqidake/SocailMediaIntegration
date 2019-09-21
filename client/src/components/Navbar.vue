@@ -3,8 +3,8 @@
         <v-app-bar flat app>           
             <v-app-bar-nav-icon class="grey--text" @click="drawer = !drawer"></v-app-bar-nav-icon>
             <v-toolbar-title class="text-uppercase grey--text">
-                <span class="font-weight-light">Todo</span>
-                <span>Ninja</span>
+                <span class="font-weight-light">Social</span>
+                <span>Gallery</span>
             </v-toolbar-title> 
             <v-spacer></v-spacer>    
             <v-btn text color="grey">
@@ -15,12 +15,12 @@
 
         <v-navigation-drawer app v-model="drawer" class='primary'>
             <v-list>
-                <v-list-item>
+                <v-list-item v-for="link in links" :key="link.text" router :to="link.route">
                     <v-list-item-action>
-                        <v-icon>dashboard</v-icon>
+                        <v-icon class="white--text">{{link.icon}}</v-icon>
                     </v-list-item-action>
                      <v-list-item-content>
-                        <v-list-item-title>Dashboard</v-list-item-title>
+                        <v-list-item-title class="white--text">{{link.text}}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
 
@@ -46,7 +46,12 @@
 export default {
     data(){
         return{
-            drawer:false
+            drawer:false,
+            links:[
+                {icon:'dashboard', text:'Dashboard', route:'/'},
+                {icon: 'folder', text:'My Projects', route:'/projects'},
+                {icon: 'person', text:'Team', route:'/team'}
+            ]
         }
     }
 }
