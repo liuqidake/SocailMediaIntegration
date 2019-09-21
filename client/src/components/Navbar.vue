@@ -15,12 +15,10 @@
 
         <v-navigation-drawer app v-model="drawer" class='primary'>
             <v-list >
-                <v-list-item class="mt-8" v-for="link in links" :key="link.text" router :to="link.route">
-                    <v-list-item-action>
-                        <v-icon>{{link.icon}}</v-icon>
-                    </v-list-item-action>
+                <v-list-item class="mt-12" v-for="link in links" :key="link.text" router :to="link.route">
                      <v-list-item-content>
-                        <v-list-item-title class="black--text">{{link.text}}</v-list-item-title>
+                         <SocialMediaLogin :name="link.icon"/>
+                        <!-- <v-list-item-title class="black--text">{{link.text}}</v-list-item-title> -->
                     </v-list-item-content>
                 </v-list-item>
             </v-list>
@@ -32,8 +30,10 @@
 
 <script>
 import firebase from 'firebase'
+import SocialMediaLogin from '../views/SocialMediaLogIn.vue'
 
 export default {
+    components:{SocialMediaLogin},
     data(){
         return{
             drawer:false,
