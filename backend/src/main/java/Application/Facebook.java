@@ -1,3 +1,5 @@
+package Application;
+
 import org.springframework.social.ApiBinding;
 import org.springframework.social.facebook.api.*;
 import org.springframework.web.client.RestOperations;
