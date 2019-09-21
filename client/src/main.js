@@ -7,7 +7,9 @@ import firebase from "firebase"
 
 Vue.config.productionTip = false
 
+
 //<script src="https://www.gstatic.com/firebasejs/6.6.2/firebase-app.js"></script>
+let app="";
 
 var firebaseConfig = {
   apiKey: "AIzaSyD_gqqEmmTK2SYQC8Qs-_1kcewT8j_TATQ",
@@ -21,9 +23,14 @@ var firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-new Vue({
-  vuetify,
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+firebase.auth().onAuthStateChanged(()=>{
+  if(!app){
+    app = new Vue({
+      vuetify,
+      router,
+      store,
+      render: h => h(App)
+    }).$mount('#app');
+  }
+});
+

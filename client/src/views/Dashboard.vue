@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <h1>Dashboard</h1>
+    <Navbar/>
     <div class="mt-4 mb-4" v-for="post in posts" :key="post.name">
         <v-card max-width="344" class="mx-auto">
             <v-card-title>{{post.name}}</v-card-title>
@@ -14,8 +14,11 @@
 </template>
 
 <script>
+import Navbar from "../components/Navbar.vue"
 
 export default {
+    name:"home",
+    components:{Navbar},
     data(){
         return{
             posts:[

@@ -7,32 +7,20 @@
                 <span>Gallery</span>
             </v-toolbar-title> 
             <v-spacer></v-spacer>    
-            <v-btn text color="grey">
-                <span>Sign out</span>
+            <v-btn @click="logout" text color="grey">
+                <span>Log out</span>
                 <v-icon>exit_to_app</v-icon>
             </v-btn>       
         </v-app-bar>
 
         <v-navigation-drawer app v-model="drawer" class='primary'>
-            <v-list>
-                <v-list-item v-for="link in links" :key="link.text" router :to="link.route">
+            <v-list >
+                <v-list-item class="mt-8" v-for="link in links" :key="link.text" router :to="link.route">
                     <v-list-item-action>
-                        <v-icon class="white--text">{{link.icon}}</v-icon>
+                        <v-icon>{{link.icon}}</v-icon>
                     </v-list-item-action>
                      <v-list-item-content>
-                        <v-list-item-title class="white--text">{{link.text}}</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-
-                <v-list-item three-line>
-                    <v-list-item-content>
-                        <v-list-item-title>Three-line item</v-list-item-title>
-                        <v-list-item-subtitle>
-                        Secondary line text Lorem ipsum dolor sit amet,
-                        </v-list-item-subtitle>
-                        <v-list-item-subtitle>
-                        consectetur adipiscing elit.
-                        </v-list-item-subtitle>
+                        <v-list-item-title class="black--text">{{link.text}}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
             </v-list>
@@ -43,15 +31,27 @@
 </template>
 
 <script>
+import firebase from 'firebase'
+
 export default {
     data(){
         return{
             drawer:false,
             links:[
-                {icon:'dashboard', text:'Dashboard', route:'/'},
-                {icon: 'folder', text:'My Projects', route:'/projects'},
-                {icon: 'person', text:'Team', route:'/team'}
+                {text:'Home', icon:'fas fa-home', route:'/home'},
+                {text: 'Facebook', icon:'fab fa-facebook', route:'/projects'},
+                {text: 'Instagram', icon:'fab fa-instagram', route:'/team'},
+                {text: 'Twitter', icon:'fab fa-twitter', route:'/team'}
             ]
+        }
+    },
+    methods:{
+        logout:function(){
+            firebase.auth().signOut().then(
+                ()=>{
+                    this.$router.replace('login');
+                }
+            )
         }
     }
 }
