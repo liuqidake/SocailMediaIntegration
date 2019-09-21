@@ -21,8 +21,8 @@ export default {
             posts:[
                 {name:"John Smith", time:'1 hrs', content:"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam nostrum p"},
                 {name:"Ricky Martin", time:'1 hrs', content:"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam nostrum p"},
-                {name:"John Smith", time:'1 hrs', content:"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam nostrum p"},
-                {name:"John Smith", time:'1 hrs', content:"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam nostrum p"},
+                {name:"Tina Maryland", time:'1 hrs', content:"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam nostrum p"},
+                {name:"Victoria Beckham", time:'1 hrs', content:"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam nostrum p"},
             ]
         }
     }

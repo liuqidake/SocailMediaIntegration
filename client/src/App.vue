@@ -13,9 +13,9 @@ import Navbar from '@/components/Navbar.vue'
  const app = {
     name: 'App',  
     components:{Navbar},
-    // data: () => {  
-    //   return null
-    // },  
+    data: () => {  
+      return {}
+    },  
  }
  export default app 
 </script>
