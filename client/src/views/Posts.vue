@@ -7,51 +7,52 @@
                     <v-list-item-title class="headline">{{post.name}}</v-list-item-title>
                     <v-list-item-subtitle>{{post.time}} ago</v-list-item-subtitle>
                 </v-list-item-content>
-                <v-list-item-avatar color="white"><v-icon>{{getIcon(post.platform)}}</v-icon></v-list-item-avatar>
+                <v-list-item-avatar color="white" ><v-icon>{{getIcon(post.platform)}}</v-icon></v-list-item-avatar>
             </v-list-item>
 
-            <v-img
-            :src="post.image"
-            height="auto"
-            ></v-img>
+            <v-img :src="post.image" height="auto"></v-img>
 
             <v-card-text>
                 {{post.content}}
             </v-card-text>
 
-            <v-card-actions>
-                <v-list-group sub-group no-action>
-                    <template v-slot:activator >
-                        <v-list-item-content>
-                            <v-list-item-title color="deep-purple accent-4">Comments</v-list-item-title>
-                        </v-list-item-content>
-                    </template>
-                    <!-- <v-list-item @click="">
-                        <v-list-item-title v-text="hey"></v-list-item-title>
-                        <v-list-item-action>
-                        <v-icon v-text="he"></v-icon>
-                        </v-list-item-action> 
-                    </v-list-item>  -->
-                </v-list-group>
-                <!-- <v-btn text color="deep-purple accent-4">
-                    Bookmark
-                </v-btn>
-                <div class="flex-grow-1"></div>
-                <v-btn icon>
-                    <v-icon>mdi-heart</v-icon>
-                </v-btn>
-                <v-btn icon>
-                    <v-icon>mdi-share-variant</v-icon>
-                </v-btn> -->
-            </v-card-actions>
+            <v-divider :inset="inset"></v-divider>
+            <v-container>
+                    <span><v-btn text icon class='ml-1 mr-3'><v-icon size="20" >fas fa-thumbs-up</v-icon></v-btn>{{likes}}</span>
+                    <span><v-btn v-on:click="showComment = !showComment" text icon ><v-icon size="20">fas fa-comment</v-icon></v-btn></span>
+            </v-container>
+            <v-card-text v-if="showComment" >
+                <div v-bind:key="comment.id" v-for="comment in comments">
+                    <Comments v-bind:comment="comment"/> 
+                </div>                         
+            </v-card-text>
         </v-card>
     </div>
 </template>
 
 <script>
+import Comments from "./Comments.vue"
+
 export default {
     name:"Post",
     props:["post"],
+    data(){
+       return{
+           showComment:false,
+           likes:0
+       };
+    },
+    components:{
+       Comments
+    },
+    created: function(){
+        this.getLikes();
+    },
+    computed:{
+        comments(){
+            return this.$props.post.comments.comment
+        }
+    },
     methods:{
         getIcon:function(s){
             if(s == "facebook"){
@@ -61,7 +62,11 @@ export default {
             }else{
                 return "fab fa-instagram";
             }
+        },
+        getLikes:function(){
+            this.likes = this.$props.post.comments.like
         }
     }
 }
+
 </script>

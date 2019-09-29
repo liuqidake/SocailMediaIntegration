@@ -1,5 +1,5 @@
 <template>
-  <v-app class="grey lighten-4">
+  <v-app class="lighten-4">
     <v-content class="mx-4">
       <router-view></router-view>
     </v-content>

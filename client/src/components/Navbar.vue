@@ -21,8 +21,7 @@
                         <!-- <v-list-item-title class="black--text">{{link.text}}</v-list-item-title> -->
                     </v-list-item-content>
                 </v-list-item>
-            </v-list>
-            
+            </v-list>            
         </v-navigation-drawer>
     </nav>
     
@@ -30,7 +29,7 @@
 
 <script>
 import firebase from 'firebase'
-import SocialMediaLogin from '../views/SocialMediaLogIn.vue'
+import SocialMediaLogin from '../views/Auth/SocialMediaLogIn.vue'
 
 export default {
     components:{SocialMediaLogin},
