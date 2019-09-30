@@ -18,8 +18,10 @@
 
             <v-divider :inset="inset"></v-divider>
             <v-container>
-                    <span><v-btn text icon class='ml-1 mr-3'><v-icon size="20" >fas fa-thumbs-up</v-icon></v-btn>{{likes}}</span>
-                    <span><v-btn v-on:click="showComment = !showComment" text icon ><v-icon size="20">fas fa-comment</v-icon></v-btn></span>
+                    <v-btn text icon><v-icon size="20" >fas fa-thumbs-up</v-icon></v-btn>
+                    <span class = "a">{{likes}}</span>
+                   
+                <v-btn class = "a" v-on:click="showComment = !showComment" text icon ><v-icon size="20">fas fa-comment</v-icon></v-btn>
             </v-container>
             <v-card-text v-if="showComment" >
                 <div v-bind:key="comment.id" v-for="comment in comments">
@@ -70,3 +72,9 @@ export default {
 }
 
 </script>
+
+<style scoped>
+   /* .a{
+       border: 1px red solid
+   } */
+</style>

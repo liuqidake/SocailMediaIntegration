@@ -7,7 +7,6 @@
 </template>
 
 <script>
-
  const app = {
     name: 'App',  
     data: () => {  

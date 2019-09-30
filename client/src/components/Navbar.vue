@@ -7,10 +7,17 @@
                 <span>Gallery</span>
             </v-toolbar-title> 
             <v-spacer></v-spacer>    
-            <v-btn @click="logout" text color="grey">
-                <span>Log out</span>
-                <v-icon>exit_to_app</v-icon>
-            </v-btn>       
+            
+            <v-badge :bottom="bottom" :color="color" :overlap="true" class="align-self-center">
+                <template v-slot:badge>
+                    <span>!</span>
+                </template>
+                <v-icon >far fa-bell</v-icon>
+            </v-badge>
+            <v-btn  text color="grey">
+                <v-icon @click="logout" >exit_to_app</v-icon>    
+            </v-btn> 
+                  
         </v-app-bar>
 
         <v-navigation-drawer app v-model="drawer" class='primary'>

@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard">
     <Navbar/>
-    <div color="dark" class="mt-4 mb-4" v-bind:key="post.id" v-for="post in posts">
+    <div color="dark" class="posts" v-bind:key="post.id" v-for="post in posts">
         <Posts v-bind:post="post"/>
     </div>
   </div>
@@ -23,7 +23,17 @@ export default {
                       comment:[
                           {
                               username:"Jake",
-                              content:"Good job! I really like this one!"
+                              content:"Good job! I really like this one!",
+                              reply:[
+                                  {
+                                    username:"Jake",
+                                    content:"Good job! I really like this one!",
+                                  },
+                                  {
+                                    username:"Jake",
+                                    content:"Good job! I really like this one!",
+                                  }
+                              ]
                           },
                           {
                               username:"Antonia",
@@ -78,3 +88,11 @@ export default {
     }
 };
 </script>
+
+<style scoped>
+    .posts{
+        margin-right:10em;
+        margin-top:1em;
+        margin-bottom:1em;
+    }
+</style>
