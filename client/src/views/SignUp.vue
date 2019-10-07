@@ -71,11 +71,11 @@ export default {
     },
     methods:{
       signUp: function(){
-        firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
-          function(user){
-            alert('Your account has been created')
+          firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
+          (user)=>{
+            this.$router.replace('home');
           },
-          function(err){
+          (err)=>{
             alert("Ops, "+err)
           }
         )
