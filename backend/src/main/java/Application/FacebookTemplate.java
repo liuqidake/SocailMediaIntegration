@@ -4,7 +4,7 @@ import org.springframework.social.ApiBinding;
 import org.springframework.social.facebook.api.*;
 import org.springframework.web.client.RestOperations;
 
-public interface Facebook extends GraphApi, ApiBinding {
+public interface FacebookTemplate extends GraphApi, ApiBinding {
 
     AchievementOperations achievementOperations();
 
