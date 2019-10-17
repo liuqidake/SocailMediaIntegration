@@ -1,8 +1,5 @@
 <template>
-  <div class="dashboard">
-    <Navbar/>
-    <CreatePost v-on:create-post="createPost"/>
-    <!-- <div class="compose-post">
+    <div class="compose-post">
         <v-card max-width="500" class="mx-auto">
             <v-container class="grey lighten-5">
                 <v-row no-gutters>
@@ -27,7 +24,9 @@
                         </v-flex>
                     </v-col>
                 </v-row>
-              
+                <!-- <v-contianer>
+                    <v-btn block color="primary" dark>Post</v-btn>
+                </v-contianer> -->
                 <v-row justify="center" wrap>
                     <v-col :col="6">
                          <v-btn block color="social" dark @click="postOnFacebook">Post On Facebook</v-btn>
@@ -39,48 +38,32 @@
             </v-container>
             
         </v-card>
-    </div>  -->
-    
-    <div color="dark" class="posts" v-bind:key="post.id" v-for="post in posts" :post.sync="post">
-        <Posts v-bind:post="post"/>
     </div>
-  </div>
 </template>
 
 <script>
-import Navbar from "../components/Navbar.vue"
-import Posts from "./Posts"
-import {posts_data} from "../LocalStorage.js"
-import CreatePost from "./CreatePost"
-
 export default {
-    name:"home",
-    components:{Navbar, Posts, CreatePost},
-    data(){
-        return{
-            posts:[],
-            tests:[]
-        }
-    },
-    mounted(){
-        this.loadData();
-    },
+    name: "CreatePost",
     methods:{
-        loadData: function(){
-            //eventually the data will be fetched by calling backend api
-            this.posts = posts_data
-        },
-        createPost(newPost){
-            this.posts.push(newPost);
+        postOnFacebook: function(){
+            var po = {
+                    id:5,
+                    name:"Victoria Beckham",
+                    platform:"twitter",
+                    time:'0 hrs',
+                    // image:"https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80",
+                    content:this.post_content,
+            }
+            this.$emit("create-post", po);
         }
     }
-};
+}
 </script>
 
+
 <style scoped>
-    .posts{
-        margin-right:10em;
-        margin-top:1em;
-        margin-bottom:1em;
+    .compose-post{
+        margin-right: 10em;
+        margin-top:1em
     }
 </style>

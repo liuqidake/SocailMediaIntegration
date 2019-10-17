@@ -22,7 +22,7 @@
                     <span >{{likes}}</span>         
                     <v-btn  v-on:click="showComment = !showComment" text icon ><v-icon size="20">fas fa-comment</v-icon></v-btn>
             </v-container>
-            <v-card-text v-if="showComment" >
+            <v-card-text v-if="showComment && comments!=null" >
                 <div v-bind:key="comment.id" v-for="comment in comments">
                     <Comments v-bind:comment="comment"/> 
                 </div>                         
