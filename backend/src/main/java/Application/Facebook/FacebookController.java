@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.logging.Logger;
+
 @Controller
 @RequestMapping("/")
 public class FacebookController {
-
     private ConnectionRepository connectionRepository;
+    private Logger logger;
 
     public FacebookController(ConnectionRepository connectionRepository) {
         this.connectionRepository = connectionRepository;
@@ -28,6 +30,7 @@ public class FacebookController {
         if (findPrimaryConnection == null) {
             return "redirect:/connect/facebook";
         }
+
         Facebook facebook = findPrimaryConnection.getApi();
         model.addAttribute("facebookProfile", facebook.userOperations().getUserProfile());
         PagedList<Post> feed = facebook.feedOperations().getFeed();
