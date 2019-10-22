@@ -1,0 +1,24 @@
+{
+  "name": "capjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon twitter.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^2.7.1",
+    "errorhandler": "^1.5.1",
+    "eslint": "^6.5.1",
+    "express": "^4.17.1",
+    "fbgraph": "^1.4.4",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.7.5",
+    "nodemon": "^1.19.4",
+    "pug": "^2.0.4",
+    "twit": "^2.2.11"
+  }
+}
