@@ -7,7 +7,7 @@
                 <span>Gallery</span>
             </v-toolbar-title> 
             <v-spacer></v-spacer> 
-            <v-btn text color="social">
+            <!-- <v-btn text color="social">
                 <v-badge :bottom="bottom" :color="social" :overlap="false" class="align-self-center">
                     <template v-if="hasMessages" v-slot:badge>
                         <span >1</span>
@@ -31,7 +31,7 @@
                     </template>
                     <v-icon>fab fa-twitter</v-icon>
                 </v-badge>
-            </v-btn>
+            </v-btn> -->
             <v-btn  text color="social">
                 <v-icon @click="logout">exit_to_app</v-icon>    
             </v-btn> 
