@@ -1,46 +1,7 @@
 <template>
   <div class="dashboard">
     <Navbar/>
-    <CreatePost v-on:create-post="createPost"/>
-    <!-- <div class="compose-post">
-        <v-card max-width="500" class="mx-auto">
-            <v-container class="grey lighten-5">
-                <v-row no-gutters>
-                    <v-col :cols="1">
-                        <v-flex  justify-center class="pa-2" >
-                             <v-list-item-avatar color="grey"><v-img  src="" height="40"></v-img></v-list-item-avatar>
-                        </v-flex>
-                    </v-col>
-
-                    <v-col :cols="11">
-                        <v-flex class="pa-2" >
-                            <v-form>
-                                <v-textarea
-                                ref="content"
-                                v-model="post_content"
-                                label="What's on your mind?"
-                                counter
-                                full-width
-                                single-line
-                                ></v-textarea>
-                            </v-form> 
-                        </v-flex>
-                    </v-col>
-                </v-row>
-              
-                <v-row justify="center" wrap>
-                    <v-col :col="6">
-                         <v-btn block color="social" dark @click="postOnFacebook">Post On Facebook</v-btn>
-                    </v-col>
-                    <v-col :col="6">
-                         <v-btn block color="social" dark @click="postOnTwitter">Post On Twitter</v-btn>
-                    </v-col>
-                </v-row>
-            </v-container>
-            
-        </v-card>
-    </div>  -->
-    
+    <CreatePost v-on:create-post="createPost"/> 
     <div color="dark" class="posts" v-bind:key="post.id" v-for="post in posts" :post.sync="post">
         <Posts v-bind:post="post"/>
     </div>
@@ -50,8 +11,9 @@
 <script>
 import Navbar from "../components/Navbar.vue"
 import Posts from "./Posts"
-import {posts_data} from "../LocalStorage.js"
+// import {posts_data} from "../LocalStorage.js"
 import CreatePost from "./CreatePost"
+import axios from 'axios'
 
 export default {
     name:"home",
@@ -62,14 +24,27 @@ export default {
             tests:[]
         }
     },
-    mounted(){
-        this.loadData();
+    created(){
+        axios.get("http://localhost:8081/")
+        .then(response=>{
+            this.posts = response.data;
+            // var p = (response.data)[0];
+            // //console.log((response.data)[0]);
+            // console.log("username: "+p.user.name);
+            // console.log("time: "+p.created_at);
+            // console.log("content: "+p.text);
+            // console.log("profile image "+p.user.profile_image_url_https);
+        })
+        .catch(error => console.log(error))
     },
+    // mounted(){
+    //     this.loadData();
+    // },
     methods:{
-        loadData: function(){
-            //eventually the data will be fetched by calling backend api
-            this.posts = posts_data
-        },
+        // loadData: function(){
+        //     //eventually the data will be fetched by calling backend api
+        //     this.posts = posts_data
+        // },
         createPost(newPost){
             this.posts.push(newPost);
         }

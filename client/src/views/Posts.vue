@@ -2,10 +2,10 @@
     <div>
          <v-card max-width="500" class="mx-auto">
             <v-list-item>
-                <v-list-item-avatar color="grey"><v-img  :src="post.image" height="40"></v-img></v-list-item-avatar>
+                <v-list-item-avatar color="grey"><v-img  :src="post.user.profile_image_url_https" height="40"></v-img></v-list-item-avatar>
                 <v-list-item-content>
-                    <v-list-item-title class="headline">{{post.name}}</v-list-item-title>
-                    <v-list-item-subtitle>{{post.time}} ago</v-list-item-subtitle>
+                    <v-list-item-title class="headline">{{post.user.name}}</v-list-item-title>
+                    <v-list-item-subtitle>{{post.created_at}} ago</v-list-item-subtitle>
                 </v-list-item-content>
                 <v-list-item-avatar color="white" ><v-icon>{{getIcon(post.platform)}}</v-icon></v-list-item-avatar>
             </v-list-item>
@@ -13,7 +13,7 @@
             <v-img :src="post.image" height="auto"></v-img>
 
             <v-card-text>
-                {{post.content}}
+                {{post.text}}
             </v-card-text>
 
             <v-divider :inset="inset"></v-divider>
@@ -56,13 +56,13 @@ export default {
     },
     methods:{
         getIcon:function(s){
-            if(s == "facebook"){
-                return "fab fa-facebook";
-            }else if (s == "twitter"){
+            // if(s == "facebook"){
+            //     return "fab fa-facebook";
+            // }else if (s == "twitter"){
                 return "fab fa-twitter";
-            }else{
-                return "fab fa-instagram";
-            }
+            // }else{
+            //     return "fab fa-instagram";
+            // }
         },
         getLikes:function(){
             this.likes = this.$props.post.comments.like
