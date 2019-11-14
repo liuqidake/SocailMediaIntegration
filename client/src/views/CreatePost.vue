@@ -3,11 +3,11 @@
         <v-card max-width="500" class="mx-auto">
             <v-container class="grey lighten-5">
                 <v-row no-gutters>
-                    <v-col :cols="1">
+                    <!-- <v-col :cols="1">
                         <v-flex  justify-center class="pa-2" >
                              <v-list-item-avatar color="grey"><v-img  src="" height="40"></v-img></v-list-item-avatar>
                         </v-flex>
-                    </v-col>
+                    </v-col> -->
 
                     <v-col :cols="11">
                         <v-flex class="pa-2" >
