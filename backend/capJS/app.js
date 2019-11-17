@@ -4,7 +4,9 @@ const express = require('express'),
       mongoose = require('mongoose'),
       graph = require('fbgraph'),
       id = '2541569289238161',
-      secret = '54966522aa05420fee48588105ecf608';
+      secret = '54966522aa05420fee48588105ecf608',
+      local_strategy    = require('passport-local').Strategy,
+      twitter_strategy  = require('passport-twitter').Strategy;
 
 var server = require("http").createServer(app);
      
