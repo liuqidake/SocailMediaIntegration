@@ -17,6 +17,14 @@ const reddit = new snoowrap({
 
   app.get("/", function(req, res){
     reddit.getBest().map(post => post.title).then(console.log);
+    //https://not-an-aardvark.github.io/snoowrap/Listing.html
+    //use this to fetch more posts
+    // reddit.getHot({limit: 25}).then(myListing => {
+    //     console.log(myListing.length); // => 25
+    //     myListing.fetchMore({amount: 10}).then(extendedListing => {
+    //       console.log(extendedListing.length); // => 35
+    //     })
+    //   });
   });
 
 app.listen(8081, process.env.IP, function(){
