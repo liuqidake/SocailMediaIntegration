@@ -5,21 +5,21 @@ var twitter = new twit(config)
 const express = require("express");
 const app = express();
 const bodyParser = require('body-parser');
-const cors = require('cors');
-// twitter.post('statuses/update', { status: 'hello world!' }, function(err, data, response) {
-//     console.log(data)
-// });
+// const cors = require('cors');
+twitter.post('statuses/update', { status: 'hello world!' }, function(err, data, response) {
+    console.log(data)
+});
 
-app.use(cors());
+// app.use(cors());
 app.use(bodyParser.json());
 
 var options = { screen_name: 'MSD_Project',
                 count: 20};
-// twitter.get('statuses/home_timeline', options , function(err, data) {
-//   for (var i = 0; i < data.length ; i++) {
-//     console.log(data[i]);
-//   }
-// });
+twitter.get('statuses/home_timeline', options , function(err, data) {
+  for (var i = 0; i < data.length ; i++) {
+    console.log(data[i]);
+  }
+});
 
 app.use(function(req, res, next){
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
