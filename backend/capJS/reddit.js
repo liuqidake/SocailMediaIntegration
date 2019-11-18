@@ -16,7 +16,16 @@ const reddit = new snoowrap({
   });
 
   app.get("/", function(req, res){
-    reddit.getBest().map(post => post.title).then(console.log);
+    var authenticationUrl = snoowrap.getAuthUrl({
+        clientId: config.clientId,
+        scope: ['edit', 'mysubreddits', 'read', 'submit', 'vote'],
+        redirectUri: 'http://localhost:8081/',
+        permanent: false,
+        state: 'randomstring' // a random string, this could be validated when the user is redirected back
+      });
+      console.log(authenticationUrl);
+      res.redirect(authenticationUrl);
+    // reddit.getBest().map(post => post.title).then(console.log);
     //https://not-an-aardvark.github.io/snoowrap/Listing.html
     //use this to fetch more posts
     // reddit.getHot({limit: 25}).then(myListing => {
