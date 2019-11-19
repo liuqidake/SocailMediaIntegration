@@ -1,6 +1,9 @@
 var twit = require('twit')
-var config = require('./twitter_config.js/index.js')
+var config = require('./twitter_config.js')
 var twitter = new twit(config)
+var oauth = require('oauth');
+var _twitterConsumerKey = config.consumer_key;
+var _twitterConsumerSecret = config.consumer_secret;
 
 const express = require("express");
 const app = express();
@@ -20,6 +23,7 @@ var options = { screen_name: 'MSD_Project',
 //     console.log(data[i]);
 //   }
 // });
+
 
 app.use(function(req, res, next){
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');

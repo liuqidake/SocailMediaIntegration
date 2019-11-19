@@ -15,7 +15,10 @@ const reddit = new snoowrap({
     refreshToken: config.refreshToken,
   });
 
-  app.get("/", function(req, res){
+  app.get('/', function(req, res){
+
+  });
+  app.get('/reddit_login', function(req, res){
     var authenticationUrl = snoowrap.getAuthUrl({
         clientId: config.clientId,
         scope: ['edit', 'mysubreddits', 'read', 'submit', 'vote'],
@@ -25,6 +28,7 @@ const reddit = new snoowrap({
       });
       console.log(authenticationUrl);
       res.redirect(authenticationUrl);
+    
     // reddit.getBest().map(post => post.title).then(console.log);
     //https://not-an-aardvark.github.io/snoowrap/Listing.html
     //use this to fetch more posts
