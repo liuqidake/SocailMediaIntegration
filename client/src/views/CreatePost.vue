@@ -3,12 +3,6 @@
         <v-card max-width="500" class="mx-auto">
             <v-container class="grey lighten-5">
                 <v-row no-gutters>
-                    <!-- <v-col :cols="1">
-                        <v-flex  justify-center class="pa-2" >
-                             <v-list-item-avatar color="grey"><v-img  src="" height="40"></v-img></v-list-item-avatar>
-                        </v-flex>
-                    </v-col> -->
-
                     <v-col :cols="11">
                         <v-flex class="pa-2" >
                             <v-form>
@@ -24,9 +18,6 @@
                         </v-flex>
                     </v-col>
                 </v-row>
-                <!-- <v-contianer>
-                    <v-btn block color="primary" dark>Post</v-btn>
-                </v-contianer> -->
                 <v-row justify="center" wrap>
                     <v-col :col="6">
                          <v-btn block color="social" dark @click="postOnFacebook">Post On Facebook</v-btn>
@@ -59,7 +50,6 @@ export default {
     }
 }
 </script>
-
 
 <style scoped>
     .compose-post{

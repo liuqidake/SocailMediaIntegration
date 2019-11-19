@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <Navbar/>
+    <Navbar @posts_data = "postsData"/>
     <CreatePost v-on:create-post="createPost"/> 
     <div color="dark" class="posts" v-bind:key="post.id" v-for="post in posts" :post.sync="post">
         <Posts v-bind:post="post"/>
@@ -14,6 +14,8 @@ import Posts from "./Posts"
 // import {posts_data} from "../LocalStorage.js"
 import CreatePost from "./CreatePost"
 import axios from 'axios'
+// import jsonp from "jsonp"
+// import config from '../config/reddit_config.js'
 
 export default {
     name:"home",
@@ -25,17 +27,21 @@ export default {
         }
     },
     created(){
-        axios.get("http://localhost:8081/")
-        .then(response=>{
-            this.posts = response.data;
-            // var p = (response.data)[0];
-            // //console.log((response.data)[0]);
-            // console.log("username: "+p.user.name);
-            // console.log("time: "+p.created_at);
-            // console.log("content: "+p.text);
-            // console.log("profile image "+p.user.profile_image_url_https);
-        })
-        .catch(error => console.log(error))
+        // axios.get("http://localhost:8081/")
+        // .then(response=>{
+        //     //this.posts = response.data;
+        //     var url = response.data;
+        //     window.location.href = url
+        // })
+        // .catch(error => console.log(error))
+
+        // jsonp("http://localhost:8081/", null, (err, res)=>{
+        //     if(err){
+        //         console.log(err);
+        //     }else{
+        //         console.log(res);
+        //     }
+        // })
     },
     // mounted(){
     //     this.loadData();
@@ -47,6 +53,13 @@ export default {
         // },
         createPost(newPost){
             this.posts.push(newPost);
+        },
+
+        postsData(variable){
+            variable.forEach(element => {
+                this.posts.push(element)
+            });
+            console.log(this.posts);
         }
     }
 };
