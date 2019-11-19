@@ -5,7 +5,7 @@
                 <v-list-item-avatar color="grey"><v-img  :src="post.user.profile_image_url_https" height="40"></v-img></v-list-item-avatar>
                 <v-list-item-content>
                     <v-list-item-title class="headline">{{post.user.name}}</v-list-item-title>
-                    <v-list-item-subtitle>{{post.created_at}} ago</v-list-item-subtitle>
+                    <v-list-item-subtitle>{{post.created_at}}</v-list-item-subtitle>
                 </v-list-item-content>
                 <v-list-item-avatar color="white" ><v-icon>{{getIcon(post.platform)}}</v-icon></v-list-item-avatar>
             </v-list-item>
