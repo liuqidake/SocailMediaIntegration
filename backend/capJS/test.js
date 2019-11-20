@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(logger({ path: "log/express.log"}));
 app.use(cookieParser());
-app.use(session({ secret: "very secret", resave: false, saveUninitialized: true}));
+app.use(session({ secret: "secret word", resave: false, saveUninitialized: true}));
 
 app.use(function(req, res, next) {
   res.locals.session = req.session;
