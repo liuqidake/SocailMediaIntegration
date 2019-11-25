@@ -15,21 +15,28 @@ const reddit = new snoowrap({
     refreshToken: config.refreshToken,
   });
 
-  app.get('/', function(req, res){
+app.get('/', function(req, res){
 
-  });
-  app.get('/reddit_login', function(req, res){
+});
+
+app.get('/reddit_callback', function(req, res){
+    res.redirect('https://www.google.com');
+});
+
+app.get('/reddit_login', function(req, res){
     var authenticationUrl = snoowrap.getAuthUrl({
         clientId: config.clientId,
         scope: ['edit', 'mysubreddits', 'read', 'submit', 'vote'],
-        redirectUri: 'http://localhost:8081/',
+        redirectUri: 'http://localhost:8081/reddit_callback',
         permanent: false,
         state: 'randomstring' // a random string, this could be validated when the user is redirected back
-      });
-      console.log(authenticationUrl);
-      res.redirect(authenticationUrl);
-    
-    // reddit.getBest().map(post => post.title).then(console.log);
+    });
+    console.log(authenticationUrl);
+    res.redirect(authenticationUrl);
+});
+
+app.get('/timeline', function(req, res){
+    reddit.getBest().map(post => post.title).then(console.log);
     //https://not-an-aardvark.github.io/snoowrap/Listing.html
     //use this to fetch more posts
     // reddit.getHot({limit: 25}).then(myListing => {
@@ -38,9 +45,23 @@ const reddit = new snoowrap({
     //       console.log(extendedListing.length); // => 35
     //     })
     //   });
-  });
+});
+
+app.get('/post_text', function(req, res){
+    reddit.getSubreddit('test').submitSelfpost({
+        title: 'wzzzzw_test', 
+        text: 'blah'
+    });
+});
+
+app.get('/post_link', function(req, res){
+    r.getSubreddit('sub').submitLink({
+        title: 'title',
+        url: 'link'
+      });
+});
 
 app.listen(8081, process.env.IP, function(){
     console.log('Server started');
-  });
+});
 
