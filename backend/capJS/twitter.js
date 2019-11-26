@@ -5,20 +5,20 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var inspect = require('util-inspect');
 var oauth = require('oauth');
-var config = require('./twitter_config.js');
+var twitter_config = require('./twitter_twitter_config.js');
 var twit = require('twit');
-var twitter = new twit(config);
+var twitter = new twit(twitter_config);
 
 const app = express();
 
 // app.use(cors());
 
-var options = { screen_name: 'MSD_Project',
+var twitter_options = { screen_name: 'MSD_Project',
                 count: 20};
 
 // Get your credentials here: https://dev.twitter.com/apps
-var _twitterConsumerKey = config.consumer_key;
-var _twitterConsumerSecret = config.consumer_secret;
+var _twitterConsumerKey = twitter_config.consumer_key;
+var _twitterConsumerSecret = twitter_config.consumer_secret;
 
 var consumer = new oauth.OAuth(
   "https://twitter.com/oauth/request_token", "https://twitter.com/oauth/access_token", 
@@ -39,7 +39,7 @@ app.use(function(req, res, next){
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization');
   next();
-})
+});
 
 
 //Routes
@@ -97,7 +97,7 @@ app.get('/home', function(req, res){
 });
 
 app.get("/timeline", function(req, res){
-  twitter.get('statuses/home_timeline', options ,(err, data) =>{
+  twitter.get('statuses/home_timeline', twitter_options ,(err, data) =>{
       if(err){
           console.log(err);
       }else{
@@ -107,7 +107,7 @@ app.get("/timeline", function(req, res){
 });
 
 app.get('/post/text', function(req, res){
-  twitter.post('statuses/update', { status: 'test' }, options ,(err, data) =>{
+  twitter.post('statuses/update', { status: 'test' }, twitter_options ,(err, data) =>{
     if(err){
         console.log(err);
     }else{
@@ -142,7 +142,7 @@ app.get('/post/media', function(req, res){
   })
 });
 
-// twitter.get('statuses/home_timeline', options , function(err, data) {
+// twitter.get('statuses/home_timeline', twitter_options , function(err, data) {
 //   for (var i = 0; i < data.length ; i++) {
 //     console.log(data[i]);
 //   }

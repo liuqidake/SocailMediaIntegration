@@ -2,7 +2,7 @@ const snoowrap = require('snoowrap');
 const express = require("express");
 const app = express();
 const bodyParser = require('body-parser');
-var config = require('./reddit_config.js');
+var reddit_config = require('./reddit_config.js');
 
 app.use(bodyParser.json());
 
@@ -10,9 +10,9 @@ app.use(bodyParser.json());
 // Alternatively, just pass in a username and password for script-type apps.
 const reddit = new snoowrap({
     userAgent: 'Capstone',
-    clientId: config.clientId,
-    clientSecret: config.clientSecret,
-    refreshToken: config.refreshToken,
+    clientId: reddit_config.clientId,
+    clientSecret: reddit_config.clientSecret,
+    refreshToken: reddit_config.refreshToken,
   });
 
 app.get('/', function(req, res){
@@ -25,7 +25,7 @@ app.get('/reddit_callback', function(req, res){
 
 app.get('/reddit_login', function(req, res){
     var authenticationUrl = snoowrap.getAuthUrl({
-        clientId: config.clientId,
+        clientId: reddit_config.clientId,
         scope: ['edit', 'mysubreddits', 'read', 'submit', 'vote'],
         redirectUri: 'http://localhost:8081/reddit_callback',
         permanent: false,
