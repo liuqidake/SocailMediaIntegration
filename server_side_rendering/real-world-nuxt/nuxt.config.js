@@ -12,7 +12,11 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.png?v=3' },
+      // { rel: "stylesheet", type: "text/css", href: "https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" }
+      {
+        rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css'
+      }
     ]
   },
   /*
@@ -23,26 +27,54 @@ export default {
   ** Global CSS
   */
   css: [
+    // '~/assets/scss/main.scss',
+    { src: '~/assets/css/main.scss', lang: 'scss' },
+    { src: 'font-awesome/scss/font-awesome.scss', lang: 'scss' },
+
   ],
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '~/plugins/firebase.js',
+    '~/plugins/validation.js'
   ],
   /*
   ** Nuxt.js dev-modules
   */
   buildModules: [
+    // '@nuxtjs/vuetify'
   ],
   /*
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/bulma',
+    //OR like this
+    [
+      'nuxt-fontawesome', {
+        imports: [
+         {
+           set: '@fortawesome/free-solid-svg-icons',
+           icons: ['fas']
+         },
+         {
+           set:'@fortawesome/free-brands-svg-icons',
+           icons: ['fab']
+         }
+       ]
+      }
+    ]
   ],
 
   serverMiddleware:[
     '~/api'
   ],
+
+  server: {
+    port: 8081, // default: 3000
+    host: '0.0.0.0' // default: localhost
+  },
   /*
   ** Build configuration
   */
@@ -50,7 +82,11 @@ export default {
     /*
     ** You can extend webpack config here
     */
-    extend (config, ctx) {
+    extend (config) {
+      config.resolve.alias['@fortawesome/fontawesome-free-brands$'] = '@fortawesome/fontawesome-free-brands/shakable.es.js'
+      config.resolve.alias['@fortawesome/fontawesome-free-solid$'] = '@fortawesome/fontawesome-free-solid/shakable.es.js'
     }
   }
+
+
 }

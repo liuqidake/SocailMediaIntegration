@@ -9,6 +9,7 @@ const app = express();
 var config = require('../static/reddit_config.js')
 var tConfig = require("../static/twitter_config.js")
 const snoowrap = require("snoowrap");
+var twit = require('twit');
 
 var _twitterConsumerKey = tConfig.consumer_key;
 var _twitterConsumerSecret = tConfig.consumer_secret;
@@ -54,32 +55,42 @@ app.get('/sessions/callback', function(req, res){
     } else {
       req.session.oauthAccessToken = oauthAccessToken;
       req.session.oauthAccessTokenSecret = oauthAccessTokenSecret;
-
+      twitter = new twit({
+        consumer_key:         _twitterConsumerKey,
+        consumer_secret:      _twitterConsumerSecret,
+        access_token:         oauthAccessToken,
+        access_token_secret:  oauthAccessTokenSecret,
+        // timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
+        // strictSSL:            true,     // optional - requires SSL certificates to be valid.
+      });
       res.redirect('/');
-      res.send(oauthAccessToken);
     }
   });
 });
 
 app.get('/twitter_login', function(req, res){
-    consumer.get("https://api.twitter.com/1.1/account/verify_credentials.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function (error, data, response) {
-      if (error) {
-        // console.log(error)
-        res.redirect('/sessions/connect');
-      } else {
-        var parsedData = JSON.parse(data);
-        res.send('You are signed in: ' + inspect(parsedData.screen_name));
-      }
-    });
+  consumer.get("https://api.twitter.com/1.1/account/verify_credentials.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function (error, data, response) {
+    if (error) {
+      //console.log(error)
+      res.redirect('/sessions/connect');
+    } else {
+      var parsedData = JSON.parse(data);
+      res.send('You are signed in: ' + inspect(parsedData.screen_name));
+    }
+  });
+});
+
+app.get('/reddit_callback', function(req, res){
+  res.redirect('/');
 });
 
 app.get("/reddit_login", (req, res)=>{
   var authenticationUrl = snoowrap.getAuthUrl({
-    clientId: config.clientId,
-    scope: ['edit', 'mysubreddits', 'read', 'submit', 'vote'],
-    redirectUri: 'http://localhost:3000/',
-    permanent: false,
-    state: 'randomstring' // a random string, this could be validated when the user is redirected back
+      clientId: config.clientId,
+      scope: ['edit', 'mysubreddits', 'read', 'submit', 'vote'],
+      redirectUri: 'http://localhost:8081/reddit_callback',
+      permanent: false,
+      state: 'randomstring' // a random string, this could be validated when the user is redirected back
   });
   console.log(authenticationUrl);
   res.redirect(authenticationUrl);
