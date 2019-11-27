@@ -1,6 +1,8 @@
 <template>
-  <div class="dashboard">
+  <div class="home">
+
     <Navbar/>
+    <nuxt-link @click="login">button</nuxt-link>
     <!-- <CreatePost v-on:create-post="createPost"/>  -->
     <!-- <div color="dark" class="posts" v-bind:key="post.id" v-for="post in posts" :post.sync="post">
         <Posts v-bind:post="post"/>
@@ -14,16 +16,24 @@
 
 <script>
 import Navbar from "@/components/Navbar.vue"
-// import Posts from "./Posts"
-// // import {posts_data} from "../LocalStorage.js"
-// import CreatePost from "./CreatePost"
-// import axios from 'axios'
-  export default{
-    name:"home",
-    components:{
-      Navbar
+import firebase from "firebase"
+export default{
+  name:"home",
+  components:{
+    Navbar
+  },
+  created(){
+      // var currentUser = firebase.auth().currentUser;
+      // if(!currentUser){
+      //   this.$router.push({path:"/login"});
+      // }
+  },
+  methods:{
+    login(){
+      this.$router.push("/login");
     }
   }
+}
 </script>
 
 <style scoped>

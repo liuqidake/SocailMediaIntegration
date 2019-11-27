@@ -17,6 +17,11 @@ export default {
       {
         rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css'
       }
+    ],
+    script:[
+      {
+        src:"https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"
+      }
     ]
   },
   /*
@@ -36,8 +41,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~/plugins/firebase.js',
-    '~/plugins/validation.js'
+    '~/plugins/firebase.js'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -72,7 +76,7 @@ export default {
   ],
 
   server: {
-    port: 8081, // default: 3000
+    port: 8080, // default: 3000
     host: '0.0.0.0' // default: localhost
   },
   /*

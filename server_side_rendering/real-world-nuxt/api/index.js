@@ -88,7 +88,7 @@ app.get("/reddit_login", (req, res)=>{
   var authenticationUrl = snoowrap.getAuthUrl({
       clientId: config.clientId,
       scope: ['edit', 'mysubreddits', 'read', 'submit', 'vote'],
-      redirectUri: 'http://localhost:8081/reddit_callback',
+      redirectUri: 'http://localhost:8080/reddit_callback',
       permanent: false,
       state: 'randomstring' // a random string, this could be validated when the user is redirected back
   });

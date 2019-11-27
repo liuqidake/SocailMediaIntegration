@@ -3,23 +3,11 @@
     <div class="container">
       <div class="columns">
         <div class="column is-4 is-offset-4">
-          <h2 class="title has-text-centered">Register!</h2>
+          <h2 class="title has-text-centered">Welcome back!</h2>
 
           <Notification :message="error" v-if="error"/>
 
-          <form method="post" @submit.prevent="register">
-            <div class="field">
-              <label class="label">Username</label>
-              <div class="control">
-                <input
-                  type="text"
-                  class="input"
-                  name="username"
-                  v-model="username"
-                  required
-                >
-              </div>
-            </div>
+          <form method="post" @submit.prevent="login">
             <div class="field">
               <label class="label">Email</label>
               <div class="control">
@@ -28,7 +16,6 @@
                   class="input"
                   name="email"
                   v-model="email"
-                  required
                 >
               </div>
             </div>
@@ -40,20 +27,64 @@
                   class="input"
                   name="password"
                   v-model="password"
-                  required
                 >
               </div>
             </div>
             <div class="control">
-              <button type="submit" class="button is-dark is-fullwidth">Register</button>
+              <button type="submit" class="button is-dark is-fullwidth">Log In</button>
             </div>
           </form>
-
           <div class="has-text-centered" style="margin-top: 20px">
-            Already got an account? <nuxt-link to="/login">Login</nuxt-link>
+            <p>
+              Don't have an account? <nuxt-link to="/register">Register</nuxt-link>
+            </p>
           </div>
         </div>
       </div>
     </div>
   </section>
 </template>
+
+<script>
+import firebase from 'firebase'
+
+export default {
+  name: 'Login',
+  asyncData() {
+    return {
+      authenticatedUser: null,
+      email: '',
+      password: '',
+      registrationPassword: '',
+      needsAccount: true
+    }
+  },
+  methods: {
+    register() {
+      if (this.password === this.registrationPassword) {
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(this.email, this.password)
+      } else {
+        // display error message
+      }
+    },
+    login() {
+      firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+    },
+    loginOrRegister() {
+      if (this.needsAccount) {
+        this.register()
+      } else {
+        this.login()
+      }
+    },
+    logout() {
+      firebase.auth().signOut()
+    }
+  },
+  created() {
+    // firebase.auth().onAuthStateChanged(user => (this.authenticatedUser = user))
+  }
+}
+</script>
