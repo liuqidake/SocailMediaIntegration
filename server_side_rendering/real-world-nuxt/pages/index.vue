@@ -2,7 +2,7 @@
   <div class="home">
 
     <Navbar/>
-    <nuxt-link @click="login">button</nuxt-link>
+    <!-- <a @click="login">button</a> -->
     <!-- <CreatePost v-on:create-post="createPost"/>  -->
     <!-- <div color="dark" class="posts" v-bind:key="post.id" v-for="post in posts" :post.sync="post">
         <Posts v-bind:post="post"/>
@@ -15,24 +15,17 @@
 </template>
 
 <script>
+
 import Navbar from "@/components/Navbar.vue"
 import firebase from "firebase"
-export default{
+
+export default {
   name:"home",
-  components:{
-    Navbar
-  },
-  created(){
-      // var currentUser = firebase.auth().currentUser;
-      // if(!currentUser){
-      //   this.$router.push({path:"/login"});
-      // }
-  },
+  components:{Navbar},
+  middleware:'auth',
   methods:{
-    login(){
-      this.$router.push("/login");
-    }
   }
+
 }
 </script>
 

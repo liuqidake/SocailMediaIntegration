@@ -1,15 +1,38 @@
 const express = require("express");
 const bodyParser = require("body-parser")
 const logger = require("express-logger")
+// const morgan = require("morgan")
 const cookieParser = require('cookie-parser')
 const inspect = require("util-inspect")
 const oauth = require("oauth");
 const session = require('express-session');
-const app = express();
-var config = require('../static/reddit_config.js')
+var reddit_config = require('../static/reddit_config.js')
 var tConfig = require("../static/twitter_config.js")
 const snoowrap = require("snoowrap");
 var twit = require('twit');
+
+const router = express.Router();
+
+var app = express();
+
+router.use((req, res, next) => {
+  Object.setPrototypeOf(req, app.request)
+  Object.setPrototypeOf(res, app.response)
+  req.res = res
+  res.req = req
+  res.append('Access-Control-Allow-Origin', ['*']);
+  res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.append('Access-Control-Allow-Headers', 'Content-Type');
+  res.locals.session = req.session;
+  next()
+})
+
+router.use(bodyParser.urlencoded({ extended: true }));
+router.use(bodyParser.json());
+router.use(logger({ path: "log/express.log"}));
+// router.user(morgan({ path: "log/express.log"}))
+router.use(cookieParser());
+router.use(session({ secret: "very secret", resave: false, saveUninitialized: true}));
 
 var _twitterConsumerKey = tConfig.consumer_key;
 var _twitterConsumerSecret = tConfig.consumer_secret;
@@ -17,18 +40,7 @@ var consumer = new oauth.OAuth(
   "https://twitter.com/oauth/request_token", "https://twitter.com/oauth/access_token",
 _twitterConsumerKey, _twitterConsumerSecret, "1.0A", "http://localhost:8080/sessions/callback", "HMAC-SHA1");
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(logger({ path: "log/express.log"}));
-app.use(cookieParser());
-app.use(session({ secret: "very secret", resave: false, saveUninitialized: true}));
-
-app.use(function(req, res, next) {
-  res.locals.session = req.session;
-  next();
-});
-
-app.get('/sessions/connect', function(req, res){
+router.get('/sessions/connect', function(req, res){
   consumer.getOAuthRequestToken(function(error, oauthToken, oauthTokenSecret, results){
     if (error) {
       res.send("Error getting OAuth request token : " + inspect(error), 500);
@@ -44,7 +56,7 @@ app.get('/sessions/connect', function(req, res){
   });
 });
 
-app.get('/sessions/callback', function(req, res){
+router.get('/sessions/callback', function(req, res){
   console.log("------------------------");
   console.log(">>"+req.session.oauthRequestToken);
   console.log(">>"+req.session.oauthRequestTokenSecret);
@@ -68,25 +80,25 @@ app.get('/sessions/callback', function(req, res){
   });
 });
 
-app.get('/twitter_login', function(req, res){
+router.get('/twitter_login', function(req, res){
   consumer.get("https://api.twitter.com/1.1/account/verify_credentials.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function (error, data, response) {
     if (error) {
       //console.log(error)
       res.redirect('/sessions/connect');
     } else {
       var parsedData = JSON.parse(data);
-      res.send('You are signed in: ' + inspect(parsedData.screen_name));
+      return res.json({ message: 'success' })
     }
   });
 });
 
-app.get('/reddit_callback', function(req, res){
+router.get('/reddit_callback', function(req, res){
   res.redirect('/');
 });
 
-app.get("/reddit_login", (req, res)=>{
+router.get('/reddit_login', function(req, res){
   var authenticationUrl = snoowrap.getAuthUrl({
-      clientId: config.clientId,
+      clientId: reddit_config.clientId,
       scope: ['edit', 'mysubreddits', 'read', 'submit', 'vote'],
       redirectUri: 'http://localhost:8080/reddit_callback',
       permanent: false,
@@ -94,12 +106,12 @@ app.get("/reddit_login", (req, res)=>{
   });
   console.log(authenticationUrl);
   res.redirect(authenticationUrl);
-})
+});
 
 
 module.exports = {
   path:"/",
-  handler:app
+  handler:router
 }
 
 

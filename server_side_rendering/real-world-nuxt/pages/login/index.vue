@@ -36,7 +36,7 @@
           </form>
           <div class="has-text-centered" style="margin-top: 20px">
             <p>
-              Don't have an account? <nuxt-link to="/register">Register</nuxt-link>
+              Don't have an account? <nuxt-link to="/signup">Register</nuxt-link>
             </p>
           </div>
         </div>
@@ -60,27 +60,15 @@ export default {
     }
   },
   methods: {
-    register() {
-      if (this.password === this.registrationPassword) {
-        firebase
-          .auth()
-          .createUserWithEmailAndPassword(this.email, this.password)
-      } else {
-        // display error message
-      }
-    },
     login() {
-      firebase.auth().signInWithEmailAndPassword(this.email, this.password)
-    },
-    loginOrRegister() {
-      if (this.needsAccount) {
-        this.register()
-      } else {
-        this.login()
-      }
-    },
-    logout() {
-      firebase.auth().signOut()
+      firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
+          (user)=>{
+            this.$router.replace('/');
+          },
+          (err)=>{
+            alert("err"+err)
+          }
+        )
     }
   },
   created() {

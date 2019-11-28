@@ -59,6 +59,8 @@
 </template>
 
 <script>
+import firebase from 'firebase'
+
 export default {
    asyncData() {
     return {
@@ -69,13 +71,16 @@ export default {
   },
   methods: {
     register() {
-      if (this.password === this.registrationPassword) {
-        firebase
-          .auth()
-          .createUserWithEmailAndPassword(this.email, this.password)
-        } else {
-        }
-      }
+      firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+      .then(
+          (user)=>{
+            this.$router.push('/login');
+          },
+          (err)=>{
+            alert("Ops, "+err)
+          }
+      )
     }
   }
+}
 </script>

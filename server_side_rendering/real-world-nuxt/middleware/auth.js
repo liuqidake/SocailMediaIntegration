@@ -1,8 +1,8 @@
-export default function ({ store, error }) {
-  if (!store.state.authUser) {
-    error({
-      message: 'You are not connected',
-      statusCode: 403
-    })
-  }
+import firebase from 'firebase'
+
+export default function({redirect}){
+  const currentUser = firebase.auth().currentUser;
+  if(!currentUser) redirect('/login');
 }
+
+
