@@ -2,14 +2,6 @@
   <div class="home">
 
     <Navbar/>
-    <!-- <a @click="login">button</a> -->
-    <!-- <CreatePost v-on:create-post="createPost"/>  -->
-    <!-- <div color="dark" class="posts" v-bind:key="post.id" v-for="post in posts" :post.sync="post">
-        <Posts v-bind:post="post"/>
-    </div> -->
-    <div>
-
-    </div>
 
   </div>
 </template>
@@ -18,12 +10,24 @@
 
 import Navbar from "@/components/Navbar.vue"
 import firebase from "firebase"
+import axios from "axios"
 
 export default {
   name:"home",
   components:{Navbar},
-  middleware:'auth',
+  // middleware:'auth',
   methods:{
+    hey(){
+       axios.get("/twitter_login")
+       .then(
+         (res)=>{
+           console.log(res);
+         },
+         (err)=>{
+           console.log("err is "+err);
+         }
+       )
+    }
   }
 
 }
