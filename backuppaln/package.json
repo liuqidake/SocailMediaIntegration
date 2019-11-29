@@ -9,6 +9,20 @@
   "author": "Qi Liu",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "ejs": "^2.7.4",
+    "express": "^4.17.1",
+    "express-logger": "0.0.3",
+    "express-method-override": "0.0.3",
+    "express-session": "^1.17.0",
+    "firebase": "^7.5.0",
+    "method-override": "^3.0.0",
+    "nodemon": "^2.0.1",
+    "oauth": "^0.9.15",
+    "request": "^2.88.0",
+    "snoowrap": "^1.20.1",
+    "twit": "^2.2.11",
+    "util-inspect": "^0.1.8"
   }
 }

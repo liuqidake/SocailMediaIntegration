@@ -1,0 +1,35 @@
+html, body{
+   font-family: 'Gupter', serif;
+   font-family: 'Open Sans', sans-serif;
+   font-family: 'Lato', sans-serif;
+}
+
+#logo-right{
+   color:#a2a4a6
+}
+.post-container{
+   padding-top:2em
+}
+
+.subreddit_name{
+   color:#9ea0a3;
+   font-size:0.7em
+}
+
+.post-row{
+   margin: 2em 0 2em 0;
+}
+
+
+.post-title{
+   width:100%;
+   display:inline-block
+}
+
+#left{
+   float:left;
+}
+
+#right {
+   float:right;
+}
