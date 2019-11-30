@@ -14,10 +14,11 @@ var reddit_config = require('./config/reddit_config.js');
 var twitter_config = require('./config/twitter_config.js');
 var twit = require('twit');
 var twitter = new twit(twitter_config);
+const axios = require("axios");
 const app = express();
 
-var twitterAuth = false
-var redditAuth = false
+var twitterAuth = true
+var redditAuth = true
 
 var firebaseConfig = {
     apiKey: "AIzaSyBbI02LGsO_PUBJYd2BrmY1d15FUxSUoVw",
@@ -162,24 +163,51 @@ app.get('/sessions/connect', function(req, res){
     });
   });
 
+  app.get("/twitter_timeline", function(req, res){
+    twitter.get('statuses/home_timeline', twitter_options ,(err, data) =>{
+        if(err){
+            console.log(err);
+        }else{
+          res.send(data);
+        }
+    });
+  });
+
 
 
 app.get("/", (req, res)=>{
     res.render("landing");
 })
 
-app.get("/home", (req, res)=>{
+app.get("/home", async (req, res)=>{
+    var redditContent = [];
+    var twitterContent = [];
     if(redditAuth){
-        request("http://localhost:8080/reddit_timeline", (error, response, body)=>{
-            if(error){
-                console.log(error);
-            }else{
-                var jsonBody = JSON.parse(body);
-                var redditTimeLine = jsonBody
-                res.render("home", {reddit:redditTimeLine});
-            }
-        })
+      var redditRes = await axios.get("http://localhost:8080/reddit_timeline");
+      if(redditRes){
+        redditContent = redditRes.data;
+      }
     }
+
+    if(twitterAuth){
+      var twitterRes = await axios.get("http://localhost:8080/twitter_timeline");
+      if(twitterRes){
+        twitterContent = twitterRes.data;
+      }
+    }
+
+    res.render("home", {reddit:redditContent, twitter:twitterContent})
+       
+
+        // request("http://localhost:8080/reddit_timeline", (error, response, body)=>{
+        //     if(error){
+        //         console.log(error);
+        //     }else{
+        //         var jsonBody = JSON.parse(body);
+        //         var redditTimeLine = jsonBody
+        //         res.render("home", {reddit:redditTimeLine});
+        //     }
+        // })
     
 })
 

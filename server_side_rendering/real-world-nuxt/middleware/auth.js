@@ -5,4 +5,3 @@ export default function({redirect}){
   if(!currentUser) redirect('/login');
 }
 
-

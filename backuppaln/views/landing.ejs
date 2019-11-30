@@ -1,7 +1,46 @@
-<% include ./partials/header %>
-
-<h1>Social Media Gallery</h1>
-
-
-<% include ./partials/footer %>
-
+<!DOCTYPE html>
+<html>
+	<head>
+			<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+			<link rel='stylesheet' type='text/css' href='./stylesheets/main.css'>
+			<link rel="stylesheet" type="text/css" href="./stylesheets/util.css">
+			<script src="https://kit.fontawesome.com/2cb9074341.js" crossorigin="anonymous"></script>
+			<link href="https://fonts.googleapis.com/css?family=Gupter|Lato|Open+Sans|Poppins&display=swap" rel="stylesheet">
+	</head>
+	<body>
+			<div class="limiter">
+					<div class="container-login100">
+						<div class="wrap-login100">
+							<form action="/login" method="POST" class="login100-form validate-form">
+								<span class="login100-form-title p-b-34">
+									Account Login
+								</span>
+								
+								<div class="wrap-input100 rs1-wrap-input100 validate-input m-b-20" data-validate="Type user name">
+									<input id="first-name" class="input100" type="email" name="email" placeholder="email">
+									<span class="focus-input100"></span>
+								</div>
+								<div class="wrap-input100 rs2-wrap-input100 validate-input m-b-20" data-validate="Type password">
+									<input class="input100" type="password" name="password" placeholder="Password">
+									<span class="focus-input100"></span>
+								</div>
+								
+								<div class="container-login100-form-btn">
+									<button class="login100-form-btn">
+										Sign in
+									</button>
+								</div>
+			
+								<div class="w-full text-center">
+									<a href="/register" class="txt3">
+										Sign Up
+									</a>
+								</div>
+							</form>
+			
+							<div class="login100-more" style="background-image: url('https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=802&q=80');"></div>
+						</div>
+					</div>
+				</div>
+	</body>
+</html>

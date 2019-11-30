@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser")
-// const logger = require("express-logger")
+const logger = require("express-logger")
 // const morgan = require("morgan")
 const cookieParser = require('cookie-parser')
 const inspect = require("util-inspect")
@@ -31,7 +31,7 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-// app.use(logger({ path: "log/express.log"}));
+app.use(logger({ path: "log/express.log"}));
 // app.user(morgan({ path: "log/express.log"}))
 app.use(cookieParser());
 app.use(session({ secret: "very secret", resave: false, saveUninitialized: true}));
@@ -83,16 +83,16 @@ app.get('/sessions/callback', function(req, res){
 });
 
 app.get('/twitter_login', function(req, res){
-  // consumer.get("https://api.twitter.com/1.1/account/verify_credentials.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function (error, data, response) {
-  //   if (error) {
-  //     //console.log(error)
-  //     res.redirect('/sessions/connect');
-  //   } else {
-  //     var parsedData = JSON.parse(data);
-  //     return res.json({ message: 'success' })
-  //   }
-  // });
-  res.send("hello")
+  consumer.get("https://api.twitter.com/1.1/account/verify_credentials.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function (error, data, response) {
+    if (error) {
+      //console.log(error)
+      res.redirect('/sessions/connect');
+    } else {
+      var parsedData = JSON.parse(data);
+      return res.json({ message: 'success' })
+    }
+  });
+  // res.send("hello")
 });
 
 app.get('/reddit_callback', function(req, res){

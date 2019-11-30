@@ -10,12 +10,12 @@
         </button>
     </div>
     <div class="navbar-menu">
-      <button class="navbar-item" @click="loginTwitter">
+      <nuxt-link class="navbar-item" to="/twitter_login">
         <font-awesome-icon :icon="['fab', 'twitter-square']" size="2x"/>
-      </button>
-      <button class="navbar-item" @click="loginReddit">
+      </nuxt-link>
+      <nuxt-link class="navbar-item" to="/reddit_login">
           <font-awesome-icon :icon="['fab', 'reddit-square']" size="2x"/>
-      </button>
+      </nuxt-link>
       <div class="navbar-end">
         <button class="navbar-item" @click="logout">Log Out</button>
       </div>

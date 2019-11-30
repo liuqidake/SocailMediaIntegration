@@ -1,20 +1,23 @@
 <% include ./partials/header %>
  <div class="container create-post post-container">
-    <div class="row d-flex justify-content-center">
+    <div class="row post-area d-flex justify-content-center">
         <div class="col-md-6">      
-            <div class="md-form">
-                <textarea id="form7" class="md-textarea form-control" rows="3"></textarea>
-                <!-- <label for="form7">Material textarea</label>  -->
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea3"></label>
+                    <textarea class="form-control" id="exampleFormControlTextarea3" rows="7">What's on your mind?
+                    </textarea>
+                </div>
             </div>
         </div>    
     </div>
-    <div class="row d-flex justify-content-center">
-        <div class="col-md-3">      
-           <button>post</button>
-        </div>    
-        <div class="col-md-3">      
-            <button>post</button>
-        </div>  
+    <div class=" row d-flex justify-content-center">  
+        <div class="col-md-3 text-center ">
+            <a class="btn btn-primary submit-button" href="#" role="button">Post on Twitter</a>  
+        </div>
+        <div class="col-md-3 text-center ">
+            <a class="btn btn-primary submit-button" href="#" role="button">Post on Reddit</a>
+        </div>
+            
     </div>
 </div> 
 <div class="container post-container">
@@ -35,6 +38,29 @@
                     <h6 class="card-subtitle mb-2 text-muted"></h6>
                     <p class="card-text grey-text"><%= r.title %></p>
                     <p class="card-text"><%= r.selftext %></p>
+                    <!-- <a href="#" class="card-link">Card link</a> -->
+                    <!-- <a href="#" class="card-link">Another link</a> -->
+                </div>
+            </div>     
+        </div>    
+    </div>
+ <% }) %>
+ <% twitter.forEach((t)=>{ %>
+
+    <div class="row post-row d-flex justify-content-center">
+        <div class="col-md-6">   
+            <div class="card" >
+                <div class="card-body">
+                    <div class="post-title">
+                        <div id="left">
+                            <h5 class="card-title"><%=t.user.name %> <span class="subreddit_name grey-text"> <%= t.created_at %> </span></h5> 
+                        </div>
+                        <div id="right">
+                            <i class="fab fa-twitter-square fa-2x"></i>
+                        </div>
+                    </div>
+                    <h6 class="card-subtitle mb-2 text-muted"></h6>
+                    <p class="card-text"><%= t.text %></p>
                     <!-- <a href="#" class="card-link">Card link</a> -->
                     <!-- <a href="#" class="card-link">Another link</a> -->
                 </div>
