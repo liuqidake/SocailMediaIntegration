@@ -21,11 +21,8 @@ html, body{
 }
 
 .subreddit_name{
-   font-size:0.7em
-}
-
-.grey-text{
    color:#9ea0a3;
+   font-size:0.7em
 }
 
 .post-row{
