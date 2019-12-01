@@ -37,11 +37,6 @@ html, body{
 }
 
 
-/* .post-area{
-   margin: 0 0 10px 0
-} */
-
-
 .post-title{
    width:100%;
    display:inline-block
@@ -616,7 +611,6 @@ label:focus,
 }
 
 .twitter-text-area{
-  display:inline-block; 
   position:relative;
 }
 
