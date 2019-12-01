@@ -1,3 +1,5 @@
+//twit from: https://github.com/ttezel/twit
+//snoowrap from: https://not-an-aardvark.github.io/snoowrap/index.html
 var snoowrap = require('snoowrap');
 var express = require("express");
 var bodyParser = require('body-parser');
@@ -60,6 +62,7 @@ app.get('/reddit_callback', function(req, res){
 });
 
 app.get('/reddit_login', function(req, res){
+    //scope: the different types of permission you desire for this authenticated session
     var authenticationUrl = snoowrap.getAuthUrl({
         clientId: reddit_config.clientId,
         scope: ['edit', 'mysubreddits', 'read', 'submit', 'vote'],
@@ -72,6 +75,7 @@ app.get('/reddit_login', function(req, res){
 });
 
 app.get('/reddit_timeline', function(req, res){
+    //getBest() returns a list of post objects
     reddit.getBest().map(post => post.title).then(console.log);
     //https://not-an-aardvark.github.io/snoowrap/Listing.html
     //use this to fetch more posts
@@ -84,6 +88,7 @@ app.get('/reddit_timeline', function(req, res){
 });
 
 app.get('/reddit_post_text', function(req, res){
+    //subreddit is the category you want to post in (ie: gifs, funny, movies, etc)
     reddit.getSubreddit('test').submitSelfpost({
         title: 'wzzzzw_test', 
         text: 'blah'
@@ -91,6 +96,8 @@ app.get('/reddit_post_text', function(req, res){
 });
 
 app.get('/reddit_post_link', function(req, res){
+    //use this post if you want to post an image, where the url is direct link to the image
+    //ie: imgur.com/aV88bbY
     reddit.getSubreddit('test').submitLink({
         title: 'title',
         url: 'google.com'
@@ -152,6 +159,8 @@ app.get('/sessions/connect', function(req, res){
   });
   
   app.get("/twitter_timeline", function(req, res){
+    // you can extract each item from the returned data list and retrieve the information
+    //can't find concrete doc for the types of information
     twitter.get('statuses/home_timeline', twitter_options ,(err, data) =>{
         if(err){
             console.log(err);
@@ -176,9 +185,9 @@ app.get('/sessions/connect', function(req, res){
   app.get('/twitter_post_media', function(req, res){
     var b64content = fs.readFileSync('/path/to/img', { encoding: 'base64' })
    
-    // first we must post the media to Twitter
+    // first post media to twitter
     T.post('media/upload', { media_data: b64content }, function (err, data, response) {
-      // now we can assign alt text to the media, for use by screen readers and
+      // optional: assign alt text to the media, for use by screen readers and
       // other text-based presentations and interpreters
       var mediaIdStr = data.media_id_string
       var altText = "Small flowers in a planter on a sunny balcony, blossoming."
