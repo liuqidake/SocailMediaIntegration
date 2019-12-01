@@ -563,11 +563,12 @@ label:focus,
 
  .left-column{
    float:left;
-   width:33.5%;
+   width:30%;
    height:100%;
    position:fixed;
    text-align:left;
-   border:1px red solid
+   background-color:#cee6ed
+   /* border:1px red solid */
  }
 
  .right-column{
@@ -576,7 +577,11 @@ label:focus,
   width:60%;
   height:100%;
   overflow:auto;
-  border:1px green solid
+  /* border:1px green solid */
+}
+
+.card-header{
+  color:gray
 }
 
 
@@ -591,7 +596,7 @@ label:focus,
   display: inline-block;
   position:absolute;
   bottom:10px;
-  left:75%;
+  left:73%;
 }
 
 .choose-btn {
@@ -618,7 +623,7 @@ label:focus,
   position:absolute;
   left:100px;
   bottom:0;
-  width:30%
+  width:20%;
 }
 
 .submit-btn{
@@ -627,3 +632,13 @@ label:focus,
   padding-left:2%;
   padding-right:2%
 } 
+
+.reddit-text-area{
+  position:relative;
+  background-color:white;
+  border-radius:1%
+}
+
+.reddit-post-choose{
+  color:gray
+}
