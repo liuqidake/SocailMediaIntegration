@@ -1,0 +1,146 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin:0;
+    padding:0;
+    overflow:hidden;
+    font-family: Lato
+}
+
+h1 { font-family: 'Caveat', cursive; }
+p { font-family: 'Montserrat', cursive;}
+
+header{
+    position:absolute;
+    z-index:0;
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+ }
+ 
+.header-images{
+    position:absolute;
+    z-index:0;
+    top:0;
+    left:0;
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+ }
+ 
+ .header-images img{
+     position:absolute;
+     width:100%;
+     height:100vh;
+     background-size: cover;
+     background-position: center;
+     background-repeat: no-repeat;
+     padding:0;
+     margin:0;
+     animation-name: imageBackground;
+     animation-duration: 30s;
+ }
+ 
+ h1{
+     font-size: 500%;line-height:1.5;font-weight:bold;color:#fff;
+     text-shadow:1px 1px #f9e5f1;
+     animation-name: imageBackground;
+     animation-duration: 30s;
+ }
+ 
+ p{
+     line-height:2; font-size:2px; font-size:17px;
+     color:#fff;
+     animation-name: imageBackground;
+     animation-duration: 30s;
+ }
+ 
+.btn{
+     margin-top:2rem;
+     background:none;
+     border-color:#f1f1f1;
+     outline:none !important;
+     animation-name: imageBackground;
+     animation-duration: 30s;
+ }
+ 
+ @keyframes imageBackground {
+  0% {
+    opacity: 0.2;
+    animation-timing-function: ease-in;
+  }
+  10% {
+    opacity: 1;
+    animation-timing-function: ease-out;
+  }
+  20% {
+    opacity: 1
+  }
+  30% {
+    opacity: 1
+  }
+}
+ 
+ 
+ .container {
+    z-index:1;
+    position:fixed;
+    width:100%;
+    height:50%;
+    top:20%;
+    margin-left:8%;
+    margin-right:8%;
+    text-align: center
+ }
+
+
+ .reddit{
+     background-color: red;
+     /* width:50% */
+ }
+
+section{
+    text-align:center
+}
+
+.card{
+    margin:0 auto;
+    width:80%;
+    height:80%;
+    border-radius:3%;
+    background-color:#f5f4f2;
+    border:none
+}
+
+div .reddit-icon{
+    margin-top: 20%;
+    color:#ff4500
+}
+
+div .twitter-icon{
+    margin-top: 20%;
+    color:#00acee
+}
+
+.choose{
+    display:inline-block;
+    color:black;
+    margin-top:20%;
+    width:100%;
+}
+
+.choose .confirm{
+    float:left;
+    color:black
+}
+
+.choose .continue{
+    float:right
+}
+
+.sign-in{
+    border:1px red solid
+}
+
