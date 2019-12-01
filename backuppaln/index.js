@@ -2,7 +2,9 @@ const express = require("express");
 const methodOverride = require('express-method-override');
 const firebase = require("firebase/app")
 const middleware = require('./middleware/index');
-const request = require("request");
+const fs = require("fs");
+const multer = require('multer');
+const upload = multer({dest: __dirname + '/uploads/images'});
 var snoowrap = require('snoowrap');
 var bodyParser = require('body-parser');
 var logger = require('express-logger');
@@ -17,8 +19,8 @@ var twitter = new twit(twitter_config);
 const axios = require("axios");
 const app = express();
 
-var twitterAuth = true
-var redditAuth = true
+var twitterAuth = false
+var redditAuth = false
 
 var firebaseConfig = {
     apiKey: "AIzaSyBbI02LGsO_PUBJYd2BrmY1d15FUxSUoVw",
@@ -193,22 +195,47 @@ app.get("/home", async (req, res)=>{
       var twitterRes = await axios.get("http://localhost:8080/twitter_timeline");
       if(twitterRes){
         twitterContent = twitterRes.data;
+        twitterContent.forEach((t)=>{
+          var text = String(t.text);
+          if(t.extended_entities){
+            var index = text.lastIndexOf(" ");
+            t.texts = text.substring(0, index);
+            t.image = String((t.extended_entities.media)[0].media_url_https);
+            console.log(t.image)
+          }else{
+            t.texts = text;
+            t.image = "";
+          }
+        })
       }
     }
 
     res.render("home", {reddit:redditContent, twitter:twitterContent})
-       
-
-        // request("http://localhost:8080/reddit_timeline", (error, response, body)=>{
-        //     if(error){
-        //         console.log(error);
-        //     }else{
-        //         var jsonBody = JSON.parse(body);
-        //         var redditTimeLine = jsonBody
-        //         res.render("home", {reddit:redditTimeLine});
-        //     }
-        // })
     
+})
+
+app.post("/tweet", upload.single('photo'), (req, res)=>{
+  var b64content = fs.readFileSync(req.file.path, { encoding: 'base64' })
+  twitter.post('media/upload', { media_data: b64content }, function (err, data, response) {
+    // now we can assign alt text to the media, for use by screen readers and
+    // other text-based presentations and interpreters
+    var mediaIdStr = data.media_id_string
+    var altText = "Small flowers in a planter on a sunny balcony, blossoming."
+    var meta_params = { media_id: mediaIdStr, alt_text: { text: altText } }
+  
+    twitter.post('media/metadata/create', meta_params, function (err, data, response) {
+      if (!err) {
+        // now we can reference the media and post a tweet (media will attach to the tweet)
+        var params = { status: 'loving life #nofilter', media_ids: [mediaIdStr] }
+  
+        twitter.post('statuses/update', params, function (err, data, response) {
+          console.log(data)
+        })
+      }
+    })
+
+    res.redirect("/home");
+  })
 })
 
 app.get("/login", (req, res)=>{

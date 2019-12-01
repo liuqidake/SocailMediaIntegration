@@ -1,7 +1,8 @@
 <% include ./partials/header %>
- <div class="container create-post post-container">
-    <div class="row post-area d-flex justify-content-center">
-        <div class="col-md-6">      
+<form action="/tweet", method="POST", enctype="multipart/form-data">
+    <div class="container create-post post-container">
+        <div class="row post-area d-flex justify-content-center">
+            <div class="col-md-6">      
                 <div class="form-group">
                     <label for="exampleFormControlTextarea3"></label>
                     <textarea class="form-control" id="exampleFormControlTextarea3" rows="7">What's on your mind?
@@ -10,19 +11,21 @@
             </div>
         </div>    
     </div>
+    <div>
+        <input type="file" accept="image/*" name="photo" >
+    </div>
     <div class=" row d-flex justify-content-center">  
         <div class="col-md-3 text-center ">
-            <a class="btn btn-primary submit-button" href="#" role="button">Post on Twitter</a>  
+            <!-- <a class="btn btn-primary submit-button" type="submit" role="button">Post on Twitter</a>   -->
+            <input type="submit" value="upload">
         </div>
         <div class="col-md-3 text-center ">
             <a class="btn btn-primary submit-button" href="#" role="button">Post on Reddit</a>
-        </div>
-            
+        </div>            
     </div>
-</div> 
+</form>
 <div class="container post-container">
   <% reddit.forEach((r)=>{ %>
-
     <div class="row post-row d-flex justify-content-center">
         <div class="col-md-6">   
             <div class="card" >
@@ -35,7 +38,7 @@
                             <i class="fab fa-reddit fa-2x"></i>
                         </div>
                     </div>
-                    <h6 class="card-subtitle mb-2 text-muted"></h6>
+                    <h6 class="card-subtitle mb-2 text-muted"><%= r.title %></h6>
                     <p class="card-text"><%= r.selftext %></p>
                     <!-- <a href="#" class="card-link">Card link</a> -->
                     <!-- <a href="#" class="card-link">Another link</a> -->
@@ -59,10 +62,14 @@
                         </div>
                     </div>
                     <h6 class="card-subtitle mb-2 text-muted"></h6>
-                    <p class="card-text"><%= t.text %></p>
+                    <p class="card-text"><%= t.texts %></p>
                     <!-- <a href="#" class="card-link">Card link</a> -->
                     <!-- <a href="#" class="card-link">Another link</a> -->
                 </div>
+                <% if (t.image !== ""){ %>
+                    <img src='<%= t.image %>' class="card-img-top" alt="...">
+                <% } %>
+              
             </div>     
         </div>    
     </div>

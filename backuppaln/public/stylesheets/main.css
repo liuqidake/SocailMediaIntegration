@@ -17,7 +17,8 @@ html, body{
    color:#a2a4a6
 }
 .post-container{
-   padding-top:2em
+   padding-top:2em;
+   padding-bottom:2em
 }
 
 .subreddit_name{
@@ -26,7 +27,7 @@ html, body{
 }
 
 .post-row{
-   margin: 2em 0 2em 0;
+   margin: 0.5em 0 0.5em 0;
 }
 
 .post-area{
