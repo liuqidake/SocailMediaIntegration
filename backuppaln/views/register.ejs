@@ -1,12 +1,91 @@
+<!-- <!DOCTYPE html>
+<html>
+	<head>
+			<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+			<link rel='stylesheet' type='text/css' href='./stylesheets/register.css'>
+			<script src="https://kit.fontawesome.com/2cb9074341.js" crossorigin="anonymous"></script>
+			<link href="https://fonts.googleapis.com/css?family=Gupter|Lato|Open+Sans|Poppins&display=swap" rel="stylesheet">
+	</head>
+	<body>
+			<div class="container">
+                <form action="/register", method="POST">
+                    <div class="card text-center">
+                            <div class="card-header">
+                                Register
+                            </div>
+                            <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Email address</label>
+                                        <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Password</label>
+                                        <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Password">
+                                    </div>
+                                    <div>
+                                        <small id="emailHelp" class="form-text text-muted">Already have an account? Log in <a href="/login">here</a></small>
+                                    </div>
+                                    <div>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                            </div>
+                        </div>
+                </form>
+            </div>
+	</body>
+</html> -->
 
-<% include partials/header %>
+<!DOCTYPE html>
+<html>
+	<head>
+			<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+			<link rel='stylesheet' type='text/css' href='./stylesheets/main.css'>
+			<link rel="stylesheet" type="text/css" href="./stylesheets/util.css">
+			<script src="https://kit.fontawesome.com/2cb9074341.js" crossorigin="anonymous"></script>
+			<link href="https://fonts.googleapis.com/css?family=Gupter|Lato|Open+Sans|Poppins&display=swap" rel="stylesheet">
+	</head>
+	<body>
+			<!-- <header>
+				<div class="header-images">
+					<img class="one" src="https://images.unsplash.com/photo-1509624776920-0fac24a9dfda?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80">
+				</div>
+			</header> -->
+			<div class="limiter">
+					<div class="container-login100">
+						<div class="wrap-login100">
+                            <div class="login100-more" style="background-image: url('https://images.unsplash.com/photo-1478954755238-0bb0af1dc326?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=696&q=80');"></div>
+							<form action="/register" method="POST" class="login100-form validate-form">
+								<span class="login100-form-title p-b-34">
+									Register
+								</span>
+								
+								<div class="wrap-input100 rs1-wrap-input100 validate-input m-b-20" data-validate="Type user name">
+									<input id="first-name" class="input100" type="email" name="email" placeholder="email">
+									<span class="focus-input100"></span>
+								</div>
+								<div class="wrap-input100 rs2-wrap-input100 validate-input m-b-20" data-validate="Type password">
+									<input class="input100" type="password" name="password" placeholder="Password">
+									<span class="focus-input100"></span>
+								</div>
+								
+								<div class="container-login100-form-btn">
+									<button class="login100-form-btn">
+										Sign Up
+									</button>
+								</div>
+			
+								<div class="w-full text-center">
+									<a href="/login" class="txt3">
+										Login
+									</a>
+								</div>
+							</form>
+			
+							
+						</div>
+					</div>
+				</div>
+	</body>
+</html>
 
-<form action='/register', method='POST'>
-    <input type='email' name='email' placeholder='email'>
-    <input type='password' name='password' placeholder='password'>
-    <button>Sign Up</button>
-    <p>Already have an account? Click <a href="/login">here</a></p>
-</form>
-
-
-<% include partials/footer %>

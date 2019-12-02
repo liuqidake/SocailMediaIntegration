@@ -28,14 +28,14 @@
                     </div>
                     <div class="col-md-12 upload-btn-wrapper-submit">
                             <!-- <input type="submit" class="submit-btn" value="submit"> -->
-                            <button class="submit-btn" type="submit">submit <i class="fab fa-twitter"></i></button>
+                        <button class="submit-btn" type="submit">submit <i class="fab fa-twitter"></i></button>
                     </div>
                 </form>
             </div>                    
         </div>  
         <div class="reddit-form row post-area post-row d-flex ">
-            <div class="col-md-12">      
-                <form action="/" method="POST" enctype="multipart/form-data" class="form-group reddit-text-area">
+            <div class="col-md-12 ">      
+                <form action="/reddit_post" method="POST" enctype="multipart/form-data" class="form-group  reddit-text-area">
                     <!-- <textarea class="form-control" type="text" name="text" placeholder="Or Reddit?" id="exampleFormControlTextarea3" rows="7"></textarea>
                     <img id="output">
                     <div class="col-md-12 upload-btn-wrapper">
@@ -45,23 +45,31 @@
                     <div class="col-md-12 upload-btn-wrapper-submit">
                             <button class="submit-btn" type="submit">submit <i class="fab fa-reddit-alien"></i></button>
                     </div> -->
-                    <div class="container">
-                            <div class="row justify-content-center">
+                    <div class="container reddit-post-container">
+                            <div class="row justify-content-center reddit-post-content">
                                 <div class="col-md-12 form-group">
-                                    <input class="form-control" type="text" placeholder="Title">            
+                                    <input class="form-control" type="text"  name="title" placeholder="Title">            
                                 </div>
                             </div>
-                            <div class="row justify-content-center">
+                            <div class="row justify-content-center reddit-post-content reddit-post">
                                 <div class="col-md-12 form-group">
-                                    <textarea class="form-control" placeholder="Text(optional)" id="exampleFormControlTextarea1" rows="3"></textarea>         
+                                    <textarea class="form-control" placeholder="Text(optional)" name="text" id="exampleFormControlTextarea1" rows="3"></textarea>         
+                                </div>
+                            </div>
+                            <div class="row justify-content-center reddit-post-content reddit-link reddit-link-or-post">
+                                <div class="col-md-12 form-group">
+                                    <textarea class="form-control" placeholder="Url" name="url" id="exampleFormControlTextarea1" rows="3"></textarea>         
                                 </div>
                             </div>
                             <div class="row reddit-post-choose">
                                 <div class="col-md-3 form-group">
-                                    <button><i class="fas fa-file-alt"></i> Post</button>                
+                                    <a onclick="showPost()"><i class="fas fa-file-alt"></i> Post</a>                
                                 </div>
                                 <div class="col-md-3 form-group">
-                                    <button><i class="fas fa-link"></i> Link</button>                
+                                    <a onclick="showLink()"><i class="fas fa-link"></i> Link</a>                
+                                </div>
+                                <div class="col-md-6 form-group text-right">
+                                    <button class="submit-btn" type="submit">submit <i class="fab fa-reddit"></i></button>              
                                 </div>
                             </div>
 
@@ -73,7 +81,7 @@
     <div class="right-column">
         <% reddit.forEach((r)=>{ %>
             <div class="row post-row d-flex ">
-                <div class="col-md-9">   
+                <div class="col-md-9 col-sm-9">   
                     <div class="card" >
                         <div class="card-body">
                             <div class="post-title">
@@ -94,7 +102,7 @@
          <% twitter.forEach((t)=>{ %>
         
             <div class="row post-row d-flex">
-                <div class="col-md-9">   
+                <div class="col-md-9 col-sm-9">   
                     <div class="card" >
                         <div class="card-body">
                             <div class="post-title">
@@ -136,5 +144,15 @@
         var output = document.getElementById('output');
         output.src = URL.createObjectURL(event.target.files[0]);
     };
+
+    var showPost = function(){
+        $(".reddit-post").removeClass("reddit-link-or-post");
+        $(".reddit-link").addClass("reddit-link-or-post");
+    }
+
+    var showLink = function(){
+        $(".reddit-post").addClass("reddit-link-or-post");
+        $(".reddit-link").removeClass("reddit-link-or-post");
+    }
 </script>
 <% include ./partials/footer %>
