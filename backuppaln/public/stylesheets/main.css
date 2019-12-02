@@ -288,6 +288,7 @@ label:focus,
    display: flex;
    flex-wrap: wrap;
    padding: 303px 65px 40px 65px;
+   margin-bottom:10%
  }
  
  .login100-form-title {
@@ -634,6 +635,7 @@ label:focus,
 } 
 
 .reddit-text-area{
+  padding-top:10px;
   position:relative;
   background-color:white;
   border-radius:1%
@@ -641,4 +643,42 @@ label:focus,
 
 .reddit-post-choose{
   color:gray
+}
+
+.reddit-link-or-post{
+  display:none
+}
+
+
+
+
+
+
+.header-images{
+  position:absolute;
+  z-index:0;
+  top:0;
+  left:0;
+  width:100%;
+  height:100vh;
+  overflow:hidden;
+}
+
+.header-images img{
+   position:absolute;
+   width:100%;
+   height:100vh;
+   background-size: cover;
+   background-position: center;
+   background-repeat: no-repeat;
+   padding:0;
+   margin:0;
+   animation-name: imageBackground;
+   animation-duration: 5s;
+}
+
+.nav-link{
+  /* border:1px red solid; */
+  padding-top:0;
+  padding-bottom:0
 }

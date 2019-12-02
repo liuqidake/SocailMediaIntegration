@@ -33,22 +33,13 @@
                 </form>
             </div>                    
         </div>  
-        <div class="reddit-form row post-area post-row d-flex ">
+        <div class="reddit-form row post-area post-row d-flex">
             <div class="col-md-12 ">      
-                <form action="/reddit_post" method="POST" enctype="multipart/form-data" class="form-group  reddit-text-area">
-                    <!-- <textarea class="form-control" type="text" name="text" placeholder="Or Reddit?" id="exampleFormControlTextarea3" rows="7"></textarea>
-                    <img id="output">
-                    <div class="col-md-12 upload-btn-wrapper">
-                            <button class="choose-btn"><i class="fas fa-images"></i></button>
-                            <input type="file" accept="image/*" name="photo" onchange="loadFile(event)"/>                          
-                    </div>
-                    <div class="col-md-12 upload-btn-wrapper-submit">
-                            <button class="submit-btn" type="submit">submit <i class="fab fa-reddit-alien"></i></button>
-                    </div> -->
+                <form action="/reddit_post" method="POST"  class="form-group reddit-text-area">
                     <div class="container reddit-post-container">
                             <div class="row justify-content-center reddit-post-content">
                                 <div class="col-md-12 form-group">
-                                    <input class="form-control" type="text"  name="title" placeholder="Title">            
+                                    <input class="form-control" type="text" name="title" placeholder="Title">            
                                 </div>
                             </div>
                             <div class="row justify-content-center reddit-post-content reddit-post">
@@ -80,7 +71,7 @@
     </div>       
     <div class="right-column">
         <% reddit.forEach((r)=>{ %>
-            <div class="row post-row d-flex ">
+            <div class="row post-row d-flex">
                 <div class="col-md-9 col-sm-9">   
                     <div class="card" >
                         <div class="card-body">
