@@ -574,7 +574,7 @@ label:focus,
 
  .right-column{
   float:right;
-  text-align:left;
+  /* text-align:center; */
   width:60%;
   height:100%;
   overflow:auto;
