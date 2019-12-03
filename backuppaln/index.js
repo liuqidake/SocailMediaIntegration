@@ -19,8 +19,8 @@ var twitter = new twit(twitter_config);
 const axios = require("axios");
 const app = express();
 
-var twitterAuth = true
-var redditAuth = true
+var twitterAuth = false
+var redditAuth = false
 
 var firebaseConfig = {
   apiKey: "AIzaSyBbI02LGsO_PUBJYd2BrmY1d15FUxSUoVw",
@@ -76,7 +76,7 @@ app.get('/reddit_callback', function (req, res) {
   res.redirect('/reddit_auth');
 });
 
-app.get('/reddit_login', function (req, res) {
+app.get('/reddit_login', middleware.isLoggedIn, function (req, res) {
   var authenticationUrl = snoowrap.getAuthUrl({
     clientId: reddit_config.clientId,
     scope: ['edit', 'mysubreddits', 'read', 'submit', 'vote'],
@@ -88,7 +88,7 @@ app.get('/reddit_login', function (req, res) {
   res.redirect(authenticationUrl);
 });
 
-app.get('/reddit_timeline', function (req, res) {
+app.get('/reddit_timeline', middleware.isLoggedIn, function (req, res) {
   reddit.getBest().map(post => post)
     .then((response) => {
       res.send(response)
@@ -153,7 +153,7 @@ app.get('/sessions/callback', function (req, res) {
   });
 });
 
-app.get('/twitter_login', function (req, res) {
+app.get('/twitter_login', middleware.isLoggedIn, function (req, res) {
   consumer.get("https://api.twitter.com/1.1/account/verify_credentials.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function (error, data, response) {
     if (error) {
       //console.log(error)
@@ -165,7 +165,7 @@ app.get('/twitter_login', function (req, res) {
   });
 });
 
-app.get("/twitter_timeline", function (req, res) {
+app.get("/twitter_timeline", middleware.isLoggedIn, function (req, res) {
   twitter.get('statuses/home_timeline', twitter_options, (err, data) => {
     if (err) {
       console.log(err);
@@ -177,11 +177,11 @@ app.get("/twitter_timeline", function (req, res) {
 
 
 
-app.get("/", (req, res) => {
-  res.render("landing");
+app.get("/", middleware.isLoggedIn, (req, res) => {
+  res.render("home");
 })
 
-app.get("/home", async (req, res) => {
+app.get("/home", middleware.isLoggedIn, async (req, res) => {
   var redditContent = [];
   var twitterContent = [];
   if (redditAuth) {
@@ -213,7 +213,7 @@ app.get("/home", async (req, res) => {
 
 })
 
-app.post("/tweet", upload.single('photo'), (req, res) => {
+app.post("/tweet", middleware.isLoggedIn,upload.single('photo'), (req, res) => {
   var text = req.body.text;
   var file = req.file;
   console.log(file);
@@ -259,6 +259,28 @@ app.post("/tweet", upload.single('photo'), (req, res) => {
 
 )
 
+app.post("/reddit_post", middleware.isLoggedIn,(req, res)=>{
+  var title = req.body.title;
+  var text = req.body.text;
+  var url = req.body.url;
+  if(url){
+    reddit.getSubreddit('test').submitLink({
+      title: title,
+      url: url
+    });    
+  }else{
+    console.log(title);
+  console.log(text);
+  console.log(url);
+    reddit.getSubreddit('test').submitSelfpost({
+      title: title,
+      text: text
+    });
+  }
+
+  res.redirect("/home")
+})
+
 
 app.get("/login", (req, res) => {
   res.render("login")
@@ -269,7 +291,7 @@ app.post("/login", (req, res) => {
   var password = req.body.password;
   firebase.auth().signInWithEmailAndPassword(email, password).then(
     (user) => {
-      res.redirect('/home');
+      res.redirect('/reddit_auth');
     },
     (err) => {
       console.log(err)
@@ -294,20 +316,20 @@ app.post("/register", (req, res) => {
       }
     )
 })
-app.get("/logout", (req, res) => {
+app.get("/logout", middleware.isLoggedIn, (req, res) => {
   firebase.auth().signOut().then(
     () => {
-      res.redirect('landing')
+      res.redirect('/login')
     }
   )
 
 })
 
-app.get("/reddit_auth", (req, res)=>{
+app.get("/reddit_auth", middleware.isLoggedIn,(req, res)=>{
   res.render("authReddit");
 })
 
-app.get("/twitter_auth", (req, res)=>{
+app.get("/twitter_auth", middleware.isLoggedIn, (req, res)=>{
   res.render("authTwitter");
 })
 
