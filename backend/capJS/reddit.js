@@ -8,30 +8,36 @@ app.use(bodyParser.json());
 
 //create reddit
 // Alternatively, just pass in a username and password for script-type apps.
-const reddit = new snoowrap({
-    userAgent: 'Capstone',
-    clientId: reddit_config.clientId,
-    clientSecret: reddit_config.clientSecret,
-    refreshToken: reddit_config.refreshToken,
-  });
+var reddit;
 
 app.get('/', function(req, res){
 
 });
 
 app.get('/reddit_callback', function(req, res){
-    res.redirect('https://www.google.com');
+    var auth_code = req.query.code;
+
+    reddit = snoowrap.fromAuthCode({
+        code: auth_code,
+        userAgent: 'Capstone',
+        clientId: reddit_config.clientId,
+        clientSecret: reddit_config.clientSecret,
+        redirectUri: 'http://localhost:8080/reddit_callback'
+      });
+    
+      res.redirect('/');
 });
 
 app.get('/reddit_login', function(req, res){
     var authenticationUrl = snoowrap.getAuthUrl({
         clientId: reddit_config.clientId,
         scope: ['edit', 'mysubreddits', 'read', 'submit', 'vote'],
-        redirectUri: 'http://localhost:8081/reddit_callback',
-        permanent: false,
+        redirectUri: 'http://localhost:8080/reddit_callback',
+        permanent: true,
         state: 'randomstring' // a random string, this could be validated when the user is redirected back
     });
-    console.log(authenticationUrl);
+    // var code = new URL(window.location.href).searchParams.get('code');
+    // console.log(querystring.decode(authenticationUrl));
     res.redirect(authenticationUrl);
 });
 
@@ -48,20 +54,23 @@ app.get('/timeline', function(req, res){
 });
 
 app.get('/post_text', function(req, res){
-    reddit.getSubreddit('test').submitSelfpost({
-        title: 'wzzzzw_test', 
-        text: 'blah'
-    });
+    reddit.then(r => {
+        // Now we have a requester that can access reddit through the user's account
+        r.getSubreddit('test').submitSelfpost({
+            title: 'wzzzzw_test', 
+            text: 'from the promise'
+        });
+      });
 });
 
 app.get('/post_link', function(req, res){
-    r.getSubreddit('sub').submitLink({
+    reddit.getSubreddit('sub').submitLink({
         title: 'title',
         url: 'link'
       });
 });
 
-app.listen(8081, process.env.IP, function(){
+app.listen(8080, process.env.IP, function(){
     console.log('Server started');
 });
 
