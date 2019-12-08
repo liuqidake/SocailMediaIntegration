@@ -19,9 +19,6 @@ var twitter = new twit(twitter_config);
 const axios = require("axios");
 const app = express();
 
-var twitterAuth = false
-var redditAuth = false
-
 var firebaseConfig = {
   apiKey: "AIzaSyBbI02LGsO_PUBJYd2BrmY1d15FUxSUoVw",
   authDomain: "capstone-cf0d7.firebaseapp.com",
@@ -52,12 +49,7 @@ app.use(session({ secret: "secret word", resave: false, saveUninitialized: true 
 
 //create reddit
 // Alternatively, just pass in a username and password for script-type apps.
-const reddit = new snoowrap({
-  userAgent: 'Capstone',
-  clientId: reddit_config.clientId,
-  clientSecret: reddit_config.clientSecret,
-  refreshToken: reddit_config.refreshToken,
-});
+var reddit;
 
 //Twitter setup
 
@@ -72,7 +64,14 @@ var consumer = new oauth.OAuth(
 
 //Reddit routes
 app.get('/reddit_callback', function (req, res) {
-  redditAuth = true;
+   var auth_code = req.query.code;
+   reddit = snoowrap.fromAuthCode({
+        code: auth_code,
+        userAgent: 'Capstone',
+        clientId: reddit_config.clientId,
+        clientSecret: reddit_config.clientSecret,
+        redirectUri: 'http://localhost:8080/reddit_callback'
+      });
   res.redirect('/reddit_auth');
 });
 
@@ -89,27 +88,31 @@ app.get('/reddit_login', middleware.isLoggedIn, function (req, res) {
 });
 
 app.get('/reddit_timeline', middleware.isLoggedIn, function (req, res) {
-  reddit.getBest().map(post => post)
+  reddit.then(r => {
+    // Now we have a requester that can access reddit through the user's account
+    r.getBest().map(post => post)
     .then((response) => {
       res.send(response)
     }, (err) => {
       console.log(err);
     });
+  });
+    
 });
 
-app.get('/reddit_post_text', function (req, res) {
-  reddit.getSubreddit('test').submitSelfpost({
-    title: 'wzzzzw_test',
-    text: 'blah'
-  });
-});
+// app.get('/reddit_post_text', function (req, res) {
+//   reddit.getSubreddit('test').submitSelfpost({
+//     title: 'wzzzzw_test',
+//     text: 'blah'
+//   });
+// });
 
-app.get('/reddit_post_link', function (req, res) {
-  reddit.getSubreddit('test').submitLink({
-    title: 'title',
-    url: 'google.com'
-  });
-});
+// app.get('/reddit_post_link', function (req, res) {
+//   reddit.getSubreddit('test').submitLink({
+//     title: 'title',
+//     url: 'google.com'
+//   });
+// });
 
 //twitter routes
 
@@ -132,14 +135,14 @@ app.get("/", middleware.isLoggedIn, (req, res) => {
 app.get("/home", middleware.isLoggedIn, async (req, res) => {
   var redditContent = [];
   var twitterContent = [];
-  if (redditAuth) {
+  // if (redditAuth) {
     var redditRes = await axios.get("http://localhost:8080/reddit_timeline");
     if (redditRes) {
       redditContent = redditRes.data;
     }
-  }
+  // }
 
-  if (twitterAuth) {
+  // if (twitterAuth) {
     var twitterRes = await axios.get("http://localhost:8080/twitter_timeline");
     if (twitterRes) {
       twitterContent = twitterRes.data;
@@ -155,7 +158,7 @@ app.get("/home", middleware.isLoggedIn, async (req, res) => {
         }
       })
     }
-  }
+  // }
 
   res.render("home", { reddit: redditContent, twitter: twitterContent })
 
@@ -211,18 +214,22 @@ app.post("/reddit_post", middleware.isLoggedIn,(req, res)=>{
   var title = req.body.title;
   var text = req.body.text;
   var url = req.body.url;
+  var subreddit = req.body.subreddit;
   if(url){
-    reddit.getSubreddit('test').submitLink({
-      title: title,
-      url: url
-    });    
+    reddit.then(r => {
+      // Now we have a requester that can access reddit through the user's account
+      r.getSubreddit(subreddit).submitLink({
+        title:title,
+        url: url
+      });
+    });  
   }else{
-    console.log(title);
-  console.log(text);
-  console.log(url);
-    reddit.getSubreddit('test').submitSelfpost({
-      title: title,
-      text: text
+    reddit.then(r => {
+      // Now we have a requester that can access reddit through the user's account
+      r.getSubreddit(subreddit).submitSelfpost({
+          title: title, 
+          text: text
+      });
     });
   }
 
@@ -278,6 +285,59 @@ app.get("/reddit_auth", middleware.isLoggedIn,(req, res)=>{
 app.get("/twitter_auth", middleware.isLoggedIn, (req, res)=>{
   res.render("authTwitter");
 })
+
+app.get('/twitter_login', function(req, res){
+  consumer.get("https://api.twitter.com/1.1/account/verify_credentials.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function (error, data, response) {
+    if (error) {
+      //console.log(error)
+      res.redirect('/sessions/connect');
+    } else {
+      var parsedData = JSON.parse(data);
+      res.send('You are signed in: ' + inspect(parsedData.screen_name));
+    } 
+  });
+});
+
+app.get('/sessions/connect', function(req, res){
+  consumer.getOAuthRequestToken(function(error, oauthToken, oauthTokenSecret, results){
+    if (error) {
+      res.send("Error getting OAuth request token : " + inspect(error), 500);
+    } else {  
+      req.session.oauthRequestToken = oauthToken;
+      req.session.oauthRequestTokenSecret = oauthTokenSecret;
+      console.log("Double check on 2nd step");
+      console.log("------------------------");
+      console.log("<<"+req.session.oauthRequestToken);
+      console.log("<<"+req.session.oauthRequestTokenSecret);
+      res.redirect("https://twitter.com/oauth/authorize?oauth_token="+req.session.oauthRequestToken);      
+    }
+  });
+});
+
+app.get('/sessions/callback', function(req, res){
+  console.log("------------------------");
+  console.log(">>"+req.session.oauthRequestToken);
+  console.log(">>"+req.session.oauthRequestTokenSecret);
+  console.log(">>"+req.query.oauth_verifier);
+  consumer.getOAuthAccessToken(req.session.oauthRequestToken, req.session.oauthRequestTokenSecret, req.query.oauth_verifier, function(error, oauthAccessToken, oauthAccessTokenSecret, result) {
+    if (error) {
+      res.send("Error getting OAuth access token : " + inspect(result) + "[" + oauthAccessToken + "]" + "[" + oauthAccessTokenSecret + "]" + "[" + inspect(result) + "]", 500);
+    } else {
+      req.session.oauthAccessToken = oauthAccessToken;
+      req.session.oauthAccessTokenSecret = oauthAccessTokenSecret;
+      twitter = new twit({
+        consumer_key:         _twitterConsumerKey,
+        consumer_secret:      _twitterConsumerSecret,
+        access_token:         oauthAccessToken,
+        access_token_secret:  oauthAccessTokenSecret,
+        // timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
+        // strictSSL:            true,     // optional - requires SSL certificates to be valid.
+      });
+      res.redirect('/twitter_auth');
+    }
+  });
+});
+
 
 
 
