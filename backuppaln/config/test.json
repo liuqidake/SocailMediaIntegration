@@ -1,120 +1,40 @@
-{
-    "created_at": "Sat Nov 30 16:22:58 +0000 2019",
-    "id": 1200812474737537000,
-    "id_str": "1200812474737537024",
-    "text": "Don’t forget to sin this weekend",
-    "truncated": false,
-    "entities": {
-        "hashtags": [],
-        "symbols": [],
-        "user_mentions": [],
-        "urls": []
-    },
-    "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
-    "in_reply_to_status_id": null,
-    "in_reply_to_status_id_str": null,
-    "in_reply_to_user_id": null,
-    "in_reply_to_user_id_str": null,
-    "in_reply_to_screen_name": null,
-    "user": {
-        "id": 13615722,
-        "id_str": "13615722",
-        "name": "Satan",
-        "screen_name": "s8n",
-        "location": "hell",
-        "description": "Not evil just misunderstood | https://t.co/hmJcQBAXGh | https://t.co/CWbasCgAxe | Sc: satans | Spam Acc: @s8nspam | contact@s8n.co | https://t.co/ORtPDesfff",
-        "url": "https://t.co/SApjh0eykv",
-        "entities": {
-            "url": {
-                "urls": [
-                    {
-                        "url": "https://t.co/SApjh0eykv",
-                        "expanded_url": "http://s8n.co",
-                        "display_url": "s8n.co",
-                        "indices": [
-                            0,
-                            23
-                        ]
-                    }
-                ]
-            },
-            "description": {
-                "urls": [
-                    {
-                        "url": "https://t.co/hmJcQBAXGh",
-                        "expanded_url": "http://Instagram.com/s8n",
-                        "display_url": "Instagram.com/s8n",
-                        "indices": [
-                            30,
-                            53
-                        ]
-                    },
-                    {
-                        "url": "https://t.co/CWbasCgAxe",
-                        "expanded_url": "http://Reddit.com/r/s8n",
-                        "display_url": "Reddit.com/r/s8n",
-                        "indices": [
-                            56,
-                            79
-                        ]
-                    },
-                    {
-                        "url": "https://t.co/ORtPDesfff",
-                        "expanded_url": "https://discord.gg/s8n",
-                        "display_url": "discord.gg/s8n",
-                        "indices": [
-                            133,
-                            156
-                        ]
-                    }
-                ]
-            }
-        },
-        "protected": false,
-        "followers_count": 2111759,
-        "friends_count": 80,
-        "listed_count": 2520,
-        "created_at": "Mon Feb 18 09:16:57 +0000 2008",
-        "favourites_count": 16712,
-        "utc_offset": null,
-        "time_zone": null,
-        "geo_enabled": true,
-        "verified": false,
-        "statuses_count": 6722,
-        "lang": null,
-        "contributors_enabled": false,
-        "is_translator": false,
-        "is_translation_enabled": false,
-        "profile_background_color": "000000",
-        "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
-        "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
-        "profile_background_tile": false,
-        "profile_image_url": "http://pbs.twimg.com/profile_images/1190403551425712131/D1WEBkee_normal.jpg",
-        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1190403551425712131/D1WEBkee_normal.jpg",
-        "profile_banner_url": "https://pbs.twimg.com/profile_banners/13615722/1455479554",
-        "profile_link_color": "FF0000",
-        "profile_sidebar_border_color": "000000",
-        "profile_sidebar_fill_color": "DDEEF6",
-        "profile_text_color": "333333",
-        "profile_use_background_image": true,
-        "has_extended_profile": true,
-        "default_profile": false,
-        "default_profile_image": false,
-        "can_media_tag": true,
-        "followed_by": false,
-        "following": true,
-        "follow_request_sent": false,
-        "notifications": false,
-        "translator_type": "none"
-    },
-    "geo": null,
-    "coordinates": null,
-    "place": null,
-    "contributors": null,
-    "is_quote_status": false,
-    "retweet_count": 1768,
-    "favorite_count": 11809,
-    "favorited": false,
-    "retweeted": false,
-    "lang": "en"
-}››
+Project
+#Views
+##Auth
+###Login
+###Register
+##Home
+##Crendentails
+###LoginReddit
+###LoginTwitter
+#Public
+###Stylesheets
+####main.css
+####auth.css
+####util.css
+#Router
+##index.js
+#Middleware
+##index.js
+
+Project
+#Views
+##home.ejs
+##Auth
+###login.ejs
+###register.ejs
+##Crendentials
+###twitterAuth.ejs
+###redditAuth.ejs
+##Partials
+###header.ejs
+###footer.ejs
+#Public
+##Stylesheets
+###main.css
+###auth.css
+###util.css
+#Router
+##index.js
+#Middleware
+##index.js

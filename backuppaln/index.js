@@ -112,58 +112,6 @@ app.get('/reddit_post_link', function (req, res) {
 });
 
 //twitter routes
-app.get('/sessions/connect', function (req, res) {
-  consumer.getOAuthRequestToken(function (error, oauthToken, oauthTokenSecret, results) {
-    if (error) {
-      res.send("Error getting OAuth request token : " + inspect(error), 500);
-    } else {
-      req.session.oauthRequestToken = oauthToken;
-      req.session.oauthRequestTokenSecret = oauthTokenSecret;
-      console.log("Double check on 2nd step");
-      console.log("------------------------");
-      console.log("<<" + req.session.oauthRequestToken);
-      console.log("<<" + req.session.oauthRequestTokenSecret);
-      res.redirect("https://twitter.com/oauth/authorize?oauth_token=" + req.session.oauthRequestToken);
-    }
-  });
-});
-
-app.get('/sessions/callback', function (req, res) {
-  console.log("------------------------");
-  console.log(">>" + req.session.oauthRequestToken);
-  console.log(">>" + req.session.oauthRequestTokenSecret);
-  console.log(">>" + req.query.oauth_verifier);
-  consumer.getOAuthAccessToken(req.session.oauthRequestToken, req.session.oauthRequestTokenSecret, req.query.oauth_verifier, function (error, oauthAccessToken, oauthAccessTokenSecret, result) {
-    if (error) {
-      res.send("Error getting OAuth access token : " + inspect(result) + "[" + oauthAccessToken + "]" + "[" + oauthAccessTokenSecret + "]" + "[" + inspect(result) + "]", 500);
-    } else {
-      req.session.oauthAccessToken = oauthAccessToken;
-      req.session.oauthAccessTokenSecret = oauthAccessTokenSecret;
-      twitter = new twit({
-        consumer_key: _twitterConsumerKey,
-        consumer_secret: _twitterConsumerSecret,
-        access_token: oauthAccessToken,
-        access_token_secret: oauthAccessTokenSecret,
-        // timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
-        // strictSSL:            true,     // optional - requires SSL certificates to be valid.
-      });
-      twitterAuth = true;
-      res.redirect('/twitter_auth');
-    }
-  });
-});
-
-app.get('/twitter_login', middleware.isLoggedIn, function (req, res) {
-  consumer.get("https://api.twitter.com/1.1/account/verify_credentials.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function (error, data, response) {
-    if (error) {
-      //console.log(error)
-      res.redirect('/sessions/connect');
-    } else {
-      var parsedData = JSON.parse(data);
-      res.send('You are signed in: ' + inspect(parsedData.screen_name));
-    }
-  });
-});
 
 app.get("/twitter_timeline", middleware.isLoggedIn, function (req, res) {
   twitter.get('statuses/home_timeline', twitter_options, (err, data) => {
@@ -285,7 +233,6 @@ app.post("/reddit_post", middleware.isLoggedIn,(req, res)=>{
 app.get("/login", (req, res) => {
   res.render("login")
 })
-
 app.post("/login", (req, res) => {
   var email = String(req.body.email);
   var password = req.body.password;
@@ -302,7 +249,6 @@ app.post("/login", (req, res) => {
 app.get("/register", (req, res) => {
   res.render("register")
 })
-
 app.post("/register", (req, res) => {
   var email = String(req.body.email);
   var password = req.body.password;
