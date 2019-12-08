@@ -35,12 +35,7 @@ app.use(function(req, res, next){
 
 //create reddit
 // Alternatively, just pass in a username and password for script-type apps.
-const reddit = new snoowrap({
-    userAgent: 'Capstone',
-    clientId: reddit_config.clientId,
-    clientSecret: reddit_config.clientSecret,
-    refreshToken: reddit_config.refreshToken,
-  });
+var reddit;
 
 //Twitter setup
 
@@ -58,25 +53,38 @@ var consumer = new oauth.OAuth(
 
 //Reddit routes
 app.get('/reddit_callback', function(req, res){
-    res.redirect('https://www.google.com');
+  var auth_code = req.query.code;
+
+  reddit = snoowrap.fromAuthCode({
+      code: auth_code,
+      userAgent: 'Capstone',
+      clientId: reddit_config.clientId,
+      clientSecret: reddit_config.clientSecret,
+      redirectUri: 'http://localhost:8080/reddit_callback'
+    });
+  
+    res.redirect('/');
 });
 
 app.get('/reddit_login', function(req, res){
-    //scope: the different types of permission you desire for this authenticated session
-    var authenticationUrl = snoowrap.getAuthUrl({
-        clientId: reddit_config.clientId,
-        scope: ['edit', 'mysubreddits', 'read', 'submit', 'vote'],
-        redirectUri: 'http://localhost:8080/reddit_callback',
-        permanent: false,
-        state: 'randomstring' // a random string, this could be validated when the user is redirected back
-    });
-    console.log(authenticationUrl);
-    res.redirect(authenticationUrl);
+  var authenticationUrl = snoowrap.getAuthUrl({
+    clientId: reddit_config.clientId,
+    scope: ['edit', 'mysubreddits', 'read', 'submit', 'vote'],
+    redirectUri: 'http://localhost:8080/reddit_callback',
+    permanent: true,
+    state: 'randomstring' // a random string, this could be validated when the user is redirected back
+  });
+
+  res.redirect(authenticationUrl);
 });
 
 app.get('/reddit_timeline', function(req, res){
+  reddit.then(r => {
+    // Now we have a requester that can access reddit through the user's account
+    r.getBest().map(post => post.title).then(console.log);
+  });
     //getBest() returns a list of post objects
-    reddit.getBest().map(post => post.title).then(console.log);
+    // reddit.getBest().map(post => post.title).then(console.log);
     //https://not-an-aardvark.github.io/snoowrap/Listing.html
     //use this to fetch more posts
     // reddit.getHot({limit: 25}).then(myListing => {
@@ -89,19 +97,25 @@ app.get('/reddit_timeline', function(req, res){
 
 app.get('/reddit_post_text', function(req, res){
     //subreddit is the category you want to post in (ie: gifs, funny, movies, etc)
-    reddit.getSubreddit('test').submitSelfpost({
-        title: 'wzzzzw_test', 
-        text: 'blah'
+    reddit.then(r => {
+      // Now we have a requester that can access reddit through the user's account
+      r.getSubreddit('test').submitSelfpost({
+          title: 'wzzzzw_test', 
+          text: 'from the promise'
+      });
     });
 });
 
 app.get('/reddit_post_link', function(req, res){
     //use this post if you want to post an image, where the url is direct link to the image
     //ie: imgur.com/aV88bbY
-    reddit.getSubreddit('test').submitLink({
+    reddit.then(r => {
+      // Now we have a requester that can access reddit through the user's account
+      r.getSubreddit('test').submitLink({
         title: 'title',
         url: 'google.com'
       });
+    });
 });
 
 
