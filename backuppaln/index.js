@@ -136,10 +136,15 @@ app.get("/home", middleware.isLoggedIn, async (req, res) => {
   var redditContent = [];
   var twitterContent = [];
   // if (redditAuth) {
+
+  try{
     var redditRes = await axios.get("http://localhost:8080/reddit_timeline");
     if (redditRes) {
       redditContent = redditRes.data;
     }
+  }catch(e){
+    
+  }
   // }
 
   // if (twitterAuth) {
