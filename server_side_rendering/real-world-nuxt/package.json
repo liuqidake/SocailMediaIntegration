@@ -40,7 +40,7 @@
     "twit": "^2.2.11",
     "util-inspect": "^0.1.8",
     "vue-navigation-bar": "^2.0.0",
-    "vuetify": "^2.1.11"
+    "vuetify": "^2.6.10"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.9.0",
