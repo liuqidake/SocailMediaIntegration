@@ -19,7 +19,7 @@
     "core-js": "^2.6.5",
     "firebase": "^6.6.2",
     "fontawesome": "^5.6.3",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "sqlite3": "^4.1.0",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
